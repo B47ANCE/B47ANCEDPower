@@ -1,0 +1,195 @@
+{
+  "blender": "4.5.3 LTS",
+  "results": [
+    {
+      "model": "Battery9V",
+      "vertices": 544,
+      "polygons": 480,
+      "dimensions_metres_sorted": [
+        0.01756000705063343,
+        0.026499999687075615,
+        0.04850000285606737
+      ],
+      "status": "PASS",
+      "native_rendering": "UNVERIFIED",
+      "textured": true,
+      "texture": "Battery9V-albedo.png",
+      "sha256": {
+        "Battery9V-v1.blend": "5d2f1794e951b1e967abf675ac4ea22d20933b112e8b95c7728dd93fbee8d9c2",
+        "Battery9V-v1.fbx": "b4e77838cc748de2a0e7c2b77e688c13b3bbea6cbb53a642ee229965904172a8",
+        "Battery9V-albedo.png": "7a0c5fd8863dd439a210bfdf2fcd10b24ffd47df5d6e975f87f8b4724761004e"
+      }
+    },
+    {
+      "model": "BatteryAA",
+      "vertices": 1076,
+      "polygons": 912,
+      "dimensions_metres_sorted": [
+        0.014000000432133675,
+        0.014060008805245161,
+        0.050300003238528235
+      ],
+      "status": "PASS",
+      "native_rendering": "UNVERIFIED",
+      "textured": true,
+      "texture": "BatteryAA-albedo.png",
+      "sha256": {
+        "BatteryAA-v1.blend": "924fded2088ba4f4b5b1197fde4643789ae9ecd0c807f0628d570b0ff4a6083b",
+        "BatteryAA-v1.fbx": "e24edc0fd38401e83abe933b73c6dfc4a48267b90fd6c4d49918a8b9c87bdaac",
+        "BatteryAA-albedo.png": "2d5dd56d834d360a30f980eb381f4df9f116d63b65cd6726916042dc56aefbff"
+      }
+    },
+    {
+      "model": "BatteryAAA",
+      "vertices": 1230,
+      "polygons": 1044,
+      "dimensions_metres_sorted": [
+        0.010499999858438969,
+        0.010560003574937582,
+        0.04450000163019391
+      ],
+      "status": "PASS",
+      "native_rendering": "UNVERIFIED",
+      "textured": true,
+      "texture": "BatteryAAA-albedo.png",
+      "sha256": {
+        "BatteryAAA-v1.blend": "00812e7a6bd28b407f7fc0cb1eed8f7d6d5c769ebb02654c0ec1d2a50ca1f6f3",
+        "BatteryAAA-v1.fbx": "55e1f34c43f5af0d9441b65f6d8551b2028e76d5bbfed59ea03c055551f0954a",
+        "BatteryAAA-albedo.png": "50e8e3875e5ae3ef84ab1d21c9d1df0c517eb431036bf0e8fbb0fed629e0a21d"
+      }
+    },
+    {
+      "model": "BatteryAAImprovised",
+      "vertices": 1294,
+      "polygons": 1100,
+      "dimensions_metres_sorted": [
+        0.010499999858438969,
+        0.01056000404059887,
+        0.049682841560251434
+      ],
+      "status": "PASS",
+      "native_rendering": "UNVERIFIED",
+      "textured": true,
+      "texture": "BatteryAAImprovised-albedo.png",
+      "sha256": {
+        "BatteryAAImprovised-v1.blend": "f750ff8fd125fa764ec0a5885137023438c1f988ca5767b9ae5c63cf477ef30e",
+        "BatteryAAImprovised-v1.fbx": "fa558898041adbcf8f6c1a35524434712035ffb5bbdfbf4cee09b41756ec6e16",
+        "BatteryAAImprovised-albedo.png": "34a42e37f96e4e01056f2948043ca988b32a48073c91f87c2795a1e764f47490"
+      }
+    },
+    {
+      "model": "BatteryC",
+      "vertices": 1221,
+      "polygons": 1032,
+      "dimensions_metres_sorted": [
+        0.026200000196695328,
+        0.026260008104145527,
+        0.050000006604609126
+      ],
+      "status": "PASS",
+      "native_rendering": "UNVERIFIED",
+      "textured": true,
+      "texture": "BatteryC-albedo.png",
+      "sha256": {
+        "BatteryC-v1.blend": "7a0962cd0850f041d894f7411d4306e25a12c6615967b722253f51a21b8e7907",
+        "BatteryC-v1.fbx": "ca1bb1950f7fd60cfbe059361c0b81bc62ede66f7970e7daf531c6f88407e718",
+        "BatteryC-albedo.png": "ca2a7a504e1d62c9900320dffdf58beccddcff6cefb1b8aeba4dd269a8010d02"
+      }
+    },
+    {
+      "model": "BatteryCoin",
+      "vertices": 384,
+      "polygons": 324,
+      "dimensions_metres_sorted": [
+        0.0032000034110130082,
+        0.019999999552965164,
+        0.02000000048428774
+      ],
+      "status": "PASS",
+      "native_rendering": "UNVERIFIED",
+      "textured": true,
+      "texture": "BatteryCoin-albedo.png",
+      "sha256": {
+        "BatteryCoin-v1.blend": "05fe90bff688f12cf30243a033b017e18d9a3f875ce2f0b591cf17e4e1791f62",
+        "BatteryCoin-v1.fbx": "772629f9adced92901d4c3a08b3a8d4b773231a3739b937830a8c3ecb3132b29",
+        "BatteryCoin-albedo.png": "91d77284ccc759d114a0f6dec615fa9451aa1a59e2b966318375939ee7c0106e"
+      }
+    },
+    {
+      "model": "BatteryD",
+      "vertices": 1076,
+      "polygons": 912,
+      "dimensions_metres_sorted": [
+        0.03420000150799751,
+        0.03425999917089939,
+        0.06150000820996637
+      ],
+      "status": "PASS",
+      "native_rendering": "UNVERIFIED",
+      "textured": true,
+      "texture": "BatteryD-albedo.png",
+      "sha256": {
+        "BatteryD-v1.blend": "29dfdaec63c4e35dba049f0aa3d9fab1bf6e84f0719c2980e97eeedfbdc3f454",
+        "BatteryD-v1.fbx": "a73c864b5da21ca2be1b954df53976d6f843fd987d81b8ef37ab8c60c2516b98",
+        "BatteryD-albedo.png": "9f1ea53549c1d8da8b03e62220d0debdd6a43d5f9d262126ecc80dacb3a29d08"
+      }
+    },
+    {
+      "model": "BatteryLithiumPack",
+      "vertices": 480,
+      "polygons": 490,
+      "dimensions_metres_sorted": [
+        0.01980001199990511,
+        0.03840000182390213,
+        0.06799999782523791
+      ],
+      "status": "PASS",
+      "native_rendering": "UNVERIFIED",
+      "textured": true,
+      "texture": "BatteryLithiumPack-albedo.png",
+      "sha256": {
+        "BatteryLithiumPack-v1.blend": "9fe59781626515c2c5e25d398d24d0d75d526dff09a2eff76b98a6cddee7c9bd",
+        "BatteryLithiumPack-v1.fbx": "211c0508727e6e4dd0ce454b7c574ac09f329597693bcfccdc255a4194ad3121",
+        "BatteryLithiumPack-albedo.png": "898137e013d99c65bf2e4a412da23ddc8eb9183fdfcc11feae8534b3ba9c4b8a"
+      }
+    },
+    {
+      "model": "BatteryPackLarge",
+      "vertices": 3824,
+      "polygons": 3288,
+      "dimensions_metres_sorted": [
+        0.061500011044786085,
+        0.0690000019967556,
+        0.0690000131726265
+      ],
+      "status": "PASS",
+      "native_rendering": "UNVERIFIED",
+      "textured": true,
+      "texture": "BatteryPackLarge-albedo.png",
+      "sha256": {
+        "BatteryPackLarge-v1.blend": "0effdefd4932a4689c994d32b1aa5c50fdc4c403b07436ec8e9ad042c35395d4",
+        "BatteryPackLarge-v1.fbx": "d6427008816a180c01addecc24b2fd10468aa7278eb13773149104fa885beb3a",
+        "BatteryPackLarge-albedo.png": "6dcb77077718c069be941fa36e8fe3560971e8ca966633e2eac01b434e7b3e42"
+      }
+    },
+    {
+      "model": "BatteryPackSmall",
+      "vertices": 3824,
+      "polygons": 3288,
+      "dimensions_metres_sorted": [
+        0.02859999891370535,
+        0.02860000729560852,
+        0.050300008153139286
+      ],
+      "status": "PASS",
+      "native_rendering": "UNVERIFIED",
+      "textured": true,
+      "texture": "BatteryPackSmall-albedo.png",
+      "sha256": {
+        "BatteryPackSmall-v1.blend": "0c6442e9dac485c0f492f4121f979688ed002276a616bd3412d3e3bacdcf370c",
+        "BatteryPackSmall-v1.fbx": "f129b91a069c2ac8e40b5ab5e227ce04307cf17e57fa0d0770adefae368cc64d",
+        "BatteryPackSmall-albedo.png": "e74507474e5acfc1ea1231cc5d7895e6551f24bdf870d63fbff363fab18f6160"
+      }
+    }
+  ]
+}

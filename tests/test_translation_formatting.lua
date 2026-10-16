@@ -1,0 +1,6 @@
+local path=assert(arg[1])
+local file=assert(io.open(path,"r")); local text=file:read("*a"); file:close()
+local tooltip=text:match('"Sandbox_B47ANCEDPower_ToolAssistedReplaceTimeBonus_tooltip"%s*:%s*"([^"]+)"')
+assert(tooltip,"replacement-time tooltip must exist")
+assert(not tooltip:gsub("%%%%",""):find("%%"),"literal tooltip percentages must be escaped for Java Formatter")
+print("B47ANCEDPower translation-format checks passed")

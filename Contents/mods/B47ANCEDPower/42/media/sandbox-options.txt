@@ -1,0 +1,23 @@
+VERSION = 1,
+
+option B47ANCEDPower.BatteryCapacityMultiplier { type = double, min = 0.1, max = 10.0, default = 1.0, page = B47ANCEDPower, translation = B47ANCEDPower_BatteryCapacityMultiplier, }
+option B47ANCEDPower.GlobalConsumptionMultiplier { type = double, min = 0.0, max = 10.0, default = 1.0, page = B47ANCEDPower, translation = B47ANCEDPower_GlobalConsumptionMultiplier, }
+option B47ANCEDPower.UVConsumptionMultiplier { type = double, min = 0.0, max = 10.0, default = 1.0, page = B47ANCEDPower, translation = B47ANCEDPower_UVConsumptionMultiplier, }
+option B47ANCEDPower.EnableImprovisedAdapters { type = boolean, default = true, page = B47ANCEDPower, translation = B47ANCEDPower_EnableImprovisedAdapters, }
+option B47ANCEDPower.ImprovisedEfficiencyMultiplier { type = double, min = 0.0, max = 2.0, default = 1.0, page = B47ANCEDPower, translation = B47ANCEDPower_ImprovisedEfficiencyMultiplier, }
+option B47ANCEDPower.ImprovisedResistanceMultiplier { type = double, min = 0.1, max = 5.0, default = 1.0, page = B47ANCEDPower, translation = B47ANCEDPower_ImprovisedResistanceMultiplier, }
+option B47ANCEDPower.EnableVanillaBatteryLootConversion { type = boolean, default = true, page = B47ANCEDPower, translation = B47ANCEDPower_EnableVanillaBatteryLootConversion, }
+option B47ANCEDPower.LootWeightAAA { type = integer, min = 0, max = 1000, default = 30, page = B47ANCEDPower, translation = B47ANCEDPower_LootWeightAAA, }
+option B47ANCEDPower.LootWeightAA { type = integer, min = 0, max = 1000, default = 42, page = B47ANCEDPower, translation = B47ANCEDPower_LootWeightAA, }
+option B47ANCEDPower.LootWeightC { type = integer, min = 0, max = 1000, default = 10, page = B47ANCEDPower, translation = B47ANCEDPower_LootWeightC, }
+option B47ANCEDPower.LootWeightD { type = integer, min = 0, max = 1000, default = 10, page = B47ANCEDPower, translation = B47ANCEDPower_LootWeightD, }
+option B47ANCEDPower.LootWeight9V { type = integer, min = 0, max = 1000, default = 6, page = B47ANCEDPower, translation = B47ANCEDPower_LootWeight9V, }
+option B47ANCEDPower.LootWeightLithiumPack { type = integer, min = 0, max = 1000, default = 2, page = B47ANCEDPower, translation = B47ANCEDPower_LootWeightLithiumPack, }
+option B47ANCEDPower.BatteryServiceTimeMultiplier { type = double, min = 0.1, max = 10.0, default = 1.0, page = B47ANCEDPower, translation = B47ANCEDPower_BatteryServiceTimeMultiplier, }
+option B47ANCEDPower.ToolAssistedReplaceTimeBonus { type = double, min = 0.0, max = 0.5, default = 0.1, page = B47ANCEDPower, translation = B47ANCEDPower_ToolAssistedReplaceTimeBonus, }
+option B47ANCEDPower.DefaultBatteryInstallTime { type = integer, min = 1, max = 1000, default = 55, page = B47ANCEDPower, translation = B47ANCEDPower_DefaultBatteryInstallTime, }
+option B47ANCEDPower.DefaultBatteryRemoveTime { type = integer, min = 1, max = 1000, default = 35, page = B47ANCEDPower, translation = B47ANCEDPower_DefaultBatteryRemoveTime, }
+option B47ANCEDPower.BatteryPackAssemblyEfficiency { type = double, min = 0.1, max = 1.0, default = 0.9, page = B47ANCEDPower, translation = B47ANCEDPower_BatteryPackAssemblyEfficiency, }
+option B47ANCEDPower.DigitalWatchDrainPerMinute { type = double, min = 0.0, max = 0.001, default = 0.0000002, page = B47ANCEDPower, translation = B47ANCEDPower_DigitalWatchDrainPerMinute, }
+option B47ANCEDPower.CoinCellLootChance { type = double, min = 0.0, max = 1.0, default = 0.1, page = B47ANCEDPower, translation = B47ANCEDPower_CoinCellLootChance, }
+option B47ANCEDPower.SolarMilitaryWatchLootChance { type = double, min = 0.0, max = 0.1, default = 0.003, page = B47ANCEDPower, translation = B47ANCEDPower_SolarMilitaryWatchLootChance, }

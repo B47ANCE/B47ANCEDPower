@@ -1,0 +1,9 @@
+name=B47ANCE'd Power
+id=B47ANCEDPower
+author=B47ANCE
+description=Portable-power framework with sized cells, persistent energy, timed servicing, bounded electrical providers, and optional environmental-event integration.
+poster=thumbnail.png
+icon=icon.png
+tags=Build 42;Framework;Items;Gameplay;Utilities
+versionMin=42.20.3
+modversion=0.16.0

@@ -1,0 +1,23 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>B47ANCE'd Power source icon size review</title>
+<style>
+body{font:16px system-ui;background:#252525;color:#eee;padding:24px}
+table{border-collapse:collapse}td,th{padding:16px;text-align:left;border:1px solid #666}
+.swatch{display:inline-flex;align-items:center;justify-content:center;width:88px;height:88px;margin-right:8px}
+.dark{background:#171717}.light{background:#eee}img{object-fit:contain}
+small{display:block;color:#bbb}h1{font-size:22px}
+</style>
+<h1>B47ANCE'd Power inventory-size review — source candidates</h1>
+<p>Browser-scaled masters, not native-game screenshots or approved runtime exports.
+Each image retains its original alpha and padding. No source image is modified.</p>
+<table><thead><tr><th>Item</th><th>32 px: dark / light</th><th>64 px: dark / light</th></tr></thead><tbody id="rows"></tbody></table>
+<script>
+for(const name of ['BatteryAAA','BatteryAA','BatteryC','BatteryD','BatteryCoin','BatteryLithiumPack','Battery9V','BatteryAAImprovised','BatteryPackSmall','BatteryPackLarge']){
+ const row=document.createElement('tr');const label=document.createElement('td');label.textContent=name;row.append(label);
+ for(const size of [32,64]){const cell=document.createElement('td');
+  for(const background of ['dark','light']){const box=document.createElement('span');box.className='swatch '+background;
+   const img=document.createElement('img');img.src='source/'+name+(name==='BatteryAAImprovised'?'-v2.png':'-v1.png');img.width=size;img.height=size;img.alt=name;
+   box.append(img);cell.append(box)}row.append(cell)}document.querySelector('#rows').append(row)
+}
+</script>

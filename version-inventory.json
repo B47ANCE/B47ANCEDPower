@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "canonical": "VERSION",
+  "mirrors": [
+    {
+      "path": "src/B47ANCEDPower/42/mod.info",
+      "pattern": "^modversion=(?P<version>\\S+)$"
+    },
+    {
+      "path": "src/B47ANCEDPower/info.txt",
+      "pattern": "^Version: (?P<version>\\S+)$"
+    },
+    {
+      "path": "src/B47ANCEDPower/42/media/lua/shared/B47ANCEDPower/API.lua",
+      "pattern": "^B47ANCEDPower.VERSION=\"(?P<version>[^\"]+)\"$"
+    },
+    {
+      "path": "Contents/mods/B47ANCEDPower/42/mod.info",
+      "pattern": "^modversion=(?P<version>\\S+)$"
+    },
+    {
+      "path": "Contents/mods/B47ANCEDPower/info.txt",
+      "pattern": "^Version: (?P<version>\\S+)$"
+    },
+    {
+      "path": "Contents/mods/B47ANCEDPower/42/media/lua/shared/B47ANCEDPower/API.lua",
+      "pattern": "^B47ANCEDPower.VERSION=\"(?P<version>[^\"]+)\"$"
+    },
+    {
+      "path": "README.md",
+      "pattern": "^- Version: `(?P<version>[^`]+)`$"
+    },
+    {
+      "path": "docs/MASTER_ROADMAP.md",
+      "pattern": "^Canonical version: (?P<version>\\S+)\\.$"
+    },
+    {
+      "path": "WORKSHOP_DESCRIPTION.txt",
+      "pattern": "^\\[b\\]Mod Version: (?P<version>[^\\[]+)\\[/b\\]$"
+    },
+    {
+      "path": "workshop.txt",
+      "pattern": "^description=\\[b\\]Mod Version: (?P<version>[^\\[]+)\\[/b\\]$"
+    },
+    {
+      "path": "WORKSHOP_CHANGE_NOTE.txt",
+      "pattern": "\\A\\[b\\]Version (?P<version>[^\\[]+)\\[/b\\]"
+    },
+    {
+      "path": "docs/STEAM_WORKSHOP_DESCRIPTION.txt",
+      "pattern": "^\\[b\\]Mod Version: (?P<version>[^\\[]+)\\[/b\\]$"
+    },
+    {
+      "path": "docs/IDENTITY_MIGRATION.md",
+      "pattern": "^Project Version: (?P<version>\\S+)$"
+    },
+    {
+      "path": "docs/TESTING.md",
+      "pattern": "^Project Version: (?P<version>\\S+)$"
+    },
+    {
+      "path": "TESTER_HANDOFF.md",
+      "pattern": "^# B47ANCE.d Power (?P<version>\\S+) playtester handoff$"
+    },
+    {
+      "path": "docs/IN_GAME_TESTING.md",
+      "pattern": "^Current development version: `(?P<version>[^`]+)`\\."
+    },
+    {
+      "path": "tests/test_test_harness.lua",
+      "pattern": "local API=\\{VERSION=\"(?P<version>[^\"]+)\""
+    }
+  ],
+  "changelog": {
+    "path": "CHANGELOG.md",
+    "pattern": "^## \\[(?P<version>[^\\]]+)\\]$"
+  },
+  "packaging": {
+    "artifacts": [
+      {
+        "glob": "dist/current/*.zip",
+        "pattern": "B47ANCEDPower-(?P<version>.+)-workshop-ready\\.zip",
+        "zip_members": [
+          {
+            "member": "Contents/mods/B47ANCEDPower/42/mod.info",
+            "pattern": "^modversion=(?P<version>[^\\r\\n]+)\\r?$"
+          }
+        ]
+      }
+    ]
+  },
+  "other_versions": [
+    {
+      "category": "pz",
+      "reference": "src/B47ANCEDPower/42/mod.info:versionMin",
+      "reason": "Minimum game build is independent of the mod version."
+    },
+    {
+      "category": "compatibility",
+      "reference": "src/B47ANCEDPower/42/media/lua/shared/B47ANCEDPower",
+      "reason": "Registry API, save, test-session and protocol schema numbers are unchanged by this identity migration."
+    }
+  ],
+  "historical": [
+    {
+      "reference": "dist/",
+      "reason": "All pre-rename ZIPs and staging backups are immutable historical artifacts; no current 0.16.0 package is claimed."
+    },
+    {
+      "reference": "SHA256SUMS.txt and .steamcmd-last-upload.sha256",
+      "reason": "Historical artifact/upload hashes are preserved byte-for-byte, not updated to imply a new build/upload."
+    },
+    {
+      "reference": "WORKSHOP_CHANGE_NOTE.txt after Historical release notes; versioned sections in docs/TESTING.md, docs/ARCHITECTURE.md, docs/ROADMAP.md",
+      "reason": "Prior version-specific behavior and host-test claims remain historical, not current runtime evidence."
+    },
+    {
+      "reference": "art/README.md historical production notes and art/geometry-validation.json",
+      "reason": "Exact prior generation prompts, asset hashes and validation claims are historical evidence."
+    }
+  ]
+}

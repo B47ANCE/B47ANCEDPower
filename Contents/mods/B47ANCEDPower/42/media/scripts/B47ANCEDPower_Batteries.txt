@@ -1,0 +1,102 @@
+module B47ANCEDPower
+{
+    imports { Base }
+    item BatteryAAA { DisplayName = AAA Battery, DisplayCategory = Electronics, ItemType = base:drainable, Weight = 0.025, Icon = Battery, UseDelta = 0.01, KeepOnDeplete = true, DisappearOnUse = false, }
+    item BatteryAA { DisplayName = AA Battery, DisplayCategory = Electronics, ItemType = base:drainable, Weight = 0.05, Icon = Battery, UseDelta = 0.01, KeepOnDeplete = true, DisappearOnUse = false, }
+    item BatteryC { DisplayName = C Battery, DisplayCategory = Electronics, ItemType = base:drainable, Weight = 0.12, Icon = Battery, UseDelta = 0.01, KeepOnDeplete = true, DisappearOnUse = false, }
+    item BatteryD { DisplayName = D Battery, DisplayCategory = Electronics, ItemType = base:drainable, Weight = 0.20, Icon = Battery, UseDelta = 0.01, KeepOnDeplete = true, DisappearOnUse = false, }
+    item Battery9V { DisplayName = 9V Battery, DisplayCategory = Electronics, ItemType = base:drainable, Weight = 0.05, Icon = Battery, UseDelta = 0.01, KeepOnDeplete = true, DisappearOnUse = false, }
+    item BatteryLithiumPack { DisplayName = Rechargeable Lithium Pack, DisplayCategory = Electronics, ItemType = base:drainable, Weight = 0.15, Icon = Battery, UseDelta = 0.01, KeepOnDeplete = true, DisappearOnUse = false, }
+    item BatteryAAImprovised { DisplayName = Improvised AA Battery, DisplayCategory = Electronics, ItemType = base:drainable, Weight = 0.035, Icon = Battery, UseDelta = 0.01, KeepOnDeplete = true, DisappearOnUse = false, }
+    item BatteryCoin { DisplayName = Coin Cell Battery, DisplayCategory = Electronics, ItemType = base:drainable, Weight = 0.005, Icon = Battery, UseDelta = 0.01, KeepOnDeplete = true, DisappearOnUse = false, }
+    item BatteryPackSmall { DisplayName = Taped AA Battery Pack, DisplayCategory = Electronics, ItemType = base:drainable, Weight = 0.45, Icon = Battery, UseDelta = 0.01, KeepOnDeplete = true, DisappearOnUse = false, }
+    item BatteryPackLarge { DisplayName = Large Taped D Battery Pack, DisplayCategory = Electronics, ItemType = base:drainable, Weight = 1.4, Icon = Battery, UseDelta = 0.01, KeepOnDeplete = true, DisappearOnUse = false, }
+
+    item BatteryAdapterMagazine
+    {
+        DisplayName = Field Electronics: Improvised Battery Adapters,
+        DisplayCategory = SkillBook,
+        ItemType = base:literature,
+        Weight = 0.3,
+        Icon = MagazineElectronics,
+        BoredomChange = -20,
+        StressChange = -10,
+        LearnedRecipes = MakeImprovisedAA,
+        StaticModel = Magazine,
+        Tags = base:magazine,
+        OnCreate = SpecialLootSpawns.OnCreateRecipeMagazine,
+    }
+
+    craftRecipe MakeImprovisedAA
+    {
+        Time = 60,
+        category = Electrical,
+        Tags = InHandCraft;Electrical,
+        needToBeLearn = true,
+        inputs { item 1 [B47ANCEDPower.BatteryAAA], item 1 [Base.Paperclip], }
+        outputs { item 1 B47ANCEDPower.BatteryAAImprovised, }
+        OnCreate = B47ANCEDPower.onCreateImprovisedAA,
+    }
+
+    craftRecipe MakeSmallBatteryPack
+    {
+        Time = 180,
+        category = Electrical,
+        Tags = InHandCraft;Electrical,
+        inputs { item 4 [B47ANCEDPower.BatteryAA], item 1 [Base.DuctTape], }
+        outputs { item 1 B47ANCEDPower.BatteryPackSmall, }
+        OnCreate = B47ANCEDPower.onCreateBatteryPack,
+    }
+
+    craftRecipe MakeLargeBatteryPack
+    {
+        Time = 360,
+        category = Electrical,
+        Tags = InHandCraft;Electrical,
+        inputs { item 4 [B47ANCEDPower.BatteryD], item 2 [Base.DuctTape], }
+        outputs { item 1 B47ANCEDPower.BatteryPackLarge, }
+        OnCreate = B47ANCEDPower.onCreateBatteryPack,
+    }
+}
+
+module B47ANCEDPower
+{
+    item SolarMilitaryWatch_Right
+    {
+        DisplayName = Solar Military Watch,
+        DisplayCategory = Accessory,
+        ItemType = base:alarmclockclothing,
+        Weight = 0.12,
+        Icon = Watch_Military,
+        AlarmSound = WatchAlarmLoop,
+        BodyLocation = base:rightwrist,
+        ClothingExtraSubmenu = RightWrist,
+        ClothingItem = WristWatch_Right_ClassicMilitary,
+        ClothingItemExtra = B47ANCEDPower.SolarMilitaryWatch_Left,
+        ClothingItemExtraOption = LeftWrist,
+        Cosmetic = true,
+        MetalValue = 4.0,
+        SoundRadius = 7,
+        WorldStaticModel = WatchClassicMilitary,
+        Tags = base:digital;base:hasmetal;base:morewhennozombies,
+    }
+    item SolarMilitaryWatch_Left
+    {
+        DisplayName = Solar Military Watch,
+        DisplayCategory = Accessory,
+        ItemType = base:alarmclockclothing,
+        Weight = 0.12,
+        Icon = Watch_Military,
+        AlarmSound = WatchAlarmLoop,
+        BodyLocation = base:leftwrist,
+        ClothingExtraSubmenu = LeftWrist,
+        ClothingItem = WristWatch_Left_ClassicMilitary,
+        ClothingItemExtra = B47ANCEDPower.SolarMilitaryWatch_Right,
+        ClothingItemExtraOption = RightWrist,
+        Cosmetic = true,
+        MetalValue = 4.0,
+        SoundRadius = 7,
+        WorldStaticModel = WatchClassicMilitary,
+        Tags = base:digital;base:hasmetal;base:morewhennozombies,
+    }
+}

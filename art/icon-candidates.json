@@ -1,0 +1,15 @@
+{
+  "status": "source-candidates-not-runtime-approved",
+  "icons": {
+    "BatteryAAA": "BatteryAAA-v1.png",
+    "BatteryAA": "BatteryAA-v1.png",
+    "BatteryC": "BatteryC-v1.png",
+    "BatteryD": "BatteryD-v1.png",
+    "Battery9V": "Battery9V-v1.png",
+    "BatteryCoin": "BatteryCoin-v1.png",
+    "BatteryLithiumPack": "BatteryLithiumPack-v1.png",
+    "BatteryAAImprovised": "BatteryAAImprovised-v2.png",
+    "BatteryPackSmall": "BatteryPackSmall-v1.png",
+    "BatteryPackLarge": "BatteryPackLarge-v1.png"
+  }
+}

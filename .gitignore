@@ -1,0 +1,17 @@
+.agents/
+.codex/
+.vscode/
+dist/
+__pycache__/
+*.py[cod]
+*.blend1
+*.blend2
+*.log
+*console.txt
+.steamcmd*
+local.settings.json
+.env
+.env.*
+!.env.example
+Thumbs.db
+Desktop.ini

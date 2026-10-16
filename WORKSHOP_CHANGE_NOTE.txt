@@ -1,0 +1,58 @@
+[b]Version 0.16.0[/b]
+
+[h2]B47ANCE'd Power identity migration[/h2]
+Renames the public title and all active technical namespaces to B47ANCEDPower.
+The Mod ID is now B47ANCEDPower. Dependent mods must update their dependency,
+Lua imports, item references, and integration calls. Use a fresh disposable save
+and reconfigure sandbox settings; migration from prior identities is not provided.
+Gameplay calculations and authority rules are unchanged. Historical packages
+remain unchanged. This is local development work, not an uploaded release.
+
+Dedicated multiplayer NOT TESTED. Stable-release G8 BLOCKED.
+
+[h2]Historical release notes (original versions)[/h2]
+
+[b]Version 0.15.3[/b]
+
+[h2]Release preparation[/h2]
+• Restricted the in-game validation harness to explicit debug sessions.
+• Aligned release tests and packages with the authoritative source and added checks against stale or incomplete packages.
+• Added complete Build 42 JSON localization fallback coverage across all 29 supported language folders.
+• Localized battery, adapter-magazine, solar-watch, and coin-cell service labels.
+
+[h2]Deterministic appliance demand[/h2]
+
+• Quarantines a logical appliance identity when matched squares or providers disagree about its owner or demand.
+• Prevents object enumeration order from selecting an arbitrary billable load.
+• Preserves normal one-load deduplication when every square reports identical facts.
+• Releases pending status requests after malformed responses or transport exceptions instead of wedging the client session.
+• Rejects fractional, non-finite, zero, and out-of-range status request IDs.
+
+[b]Previous 0.15.0 changes[/b]
+
+Adds a bounded, replay-safe and rate-limited server-to-client infrastructure
+status summary for uiWorks. Payloads are normalized on both realms; failures
+clear pending requests safely. Dedicated-server validation remains required.
+
+[h2]Appliance demand profiles[/h2]
+
+• Added opt-in profiles keyed only to exact item or sprite identities.
+• Requires absolute declared watts and an owner-supplied stable logical identity.
+• Deduplicates bounded multi-square object lists into one logical appliance load.
+• Active-state failures and malformed identities fail closed.
+• Added no inferred footprint loads, third-party balance, or world scans.
+
+[b]Version 0.13.0[/b]
+
+[h2]Added[/h2]
+
+• Added an authority-only, read-only infrastructure diagnostics API.
+• Added bounded summaries for registered source, storage, load, and network providers.
+• Added regional infrastructure inspection using the existing provider query budgets.
+• Added sanitized, paged environmental-event diagnostics with handler and provider-query failure visibility.
+• Added regression coverage for callback privacy, remote-client rejection, and non-mutating inspection.
+
+[h2]Roadmap[/h2]
+
+• Add provider-owned outage, equipment-damage, surge, and restoration handlers after transaction and synchronization contracts are verified.
+• Add measured generator surplus, stationary storage, car-battery harnesses, and inverter-backed building power.

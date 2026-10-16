@@ -1,0 +1,122 @@
+[h1]⚠ DEVELOPMENT BUILD — NOT YET PLAYABLE ⚠[/h1]
+
+[b]Mod Version: 0.16.0[/b]
+
+[b]This mod is under active development and is not yet considered playable or release-ready.[/b]
+
+This Workshop page is public [b]for development and collaboration purposes[/b]. The current build may contain unfinished systems, missing content, placeholder assets, bugs, compatibility problems, or changes that make it unsuitable for a normal long-term save.
+
+The development build is intended for people interested in:
+
+[list]
+[*][b]Testing experimental portable-power systems[/b]
+[*][b]Bug hunting and debugging[/b]
+[*][b]Compatibility and multiplayer testing[/b]
+[*][b]Artwork, item assets, textures, and sprites[/b]
+[*][b]Technical feedback for devices, batteries, and electrical infrastructure[/b]
+[/list]
+
+[h2]Please do not subscribe expecting a finished gameplay experience.[/h2]
+
+Features may change substantially, be temporarily disabled, or require a fresh save while development continues. A proper release announcement will be made when B47ANCE'd Power reaches a stable playable state.
+
+[url=https://ibb.co/kVx8jhNk][img]https://i.ibb.co/HLVz6r51/title.png[/img][/url]
+
+[h1]B47ANCE'd Power[/h1]
+
+Electrical generation, distribution, storage, consumption, and powered-device infrastructure for theWorks ecosystem.
+
+B47ANCE'd Power currently provides the portable-power foundation used by other Works modules. It replaces vague interchangeable battery percentages with reusable battery definitions, persistent energy state, device power profiles, authoritative servicing, and shared energy APIs.
+
+[h2]Current Features[/h2]
+
+[list]
+[*]AAA, AA, C, D, 9V, rechargeable-pack, coin-cell, and vanilla-compatible battery profiles
+[*]Persistent absolute charge with capacity-aware device consumption
+[*]Device profiles that determine compatible cells, capacity, installation rules, tools, and service timing
+[*]Timed transactional battery insertion, extraction, and replacement with completion-time revalidation
+[*]Replacement timing that combines removal and installation with a configurable kept-open service bonus
+[*]Atomic multi-cell servicing with reservations, rollback, and uncertain-operation recovery
+[*]Charge-preserving taped battery packs and explicit external-pack connectors
+[*]Learnable improvised AA adapters made from an AAA battery and paperclip
+[*]Improvised cells that preserve source energy while trading efficiency for electrical resistance
+[*]Vanilla battery loot conversion and migration of batteries already installed in supported devices
+[*]Mounted weapon-part battery servicing with stable parent-weapon and attachment reconstruction
+[*]Digital watches powered by coin cells, mechanical classic watches, and rare solar military watches
+[/list]
+
+[h2]Consumption & Energy APIs[/h2]
+
+[list]
+[*]Device, installed-load, global, UV, and dynamic consumer multipliers composed into one demand rate
+[*]Average duty-cycle accounting for lightWorks strobe, pulse, beacon, SOS, alternating, and emergency patterns
+[*]Server-authoritative energy reserve, commit, and rollback operations for cross-mod consumers
+[*]Exact charge read-back verification and persistent recovery markers for uncertain energy mutations
+[*]Public APIs for battery definitions, powered devices, loads, charge state, consumption, and energy transactions
+[*]Bounded source, storage, load, and network provider registries with normalized snapshots and region-scoped discovery
+[*]Read-only vanilla generator source/network observations without duplicating or mutating fuel, condition, activation, or native load state
+[*]Optional, persistent environmental-event ingress with bounded regional discovery, replay protection, consequence proposals, and fail-closed handler isolation
+[/list]
+
+[h2]Ecosystem Integration[/h2]
+
+[list]
+[*]Owns electrical generation, storage, distribution, consumption, and infrastructure for theWorks ecosystem
+[*]Provides required portable-power services to lightWorks and its registered portable and weapon-mounted lights
+[*]Allows Project Nightfall lighting to inherit the same power behavior through lightWorks
+[*]Provides optional transactional energy to waterWorks pumps and powered treatment equipment
+[*]Accepts optional weatherWorks events without requiring weatherWorks or taking ownership of weather simulation
+[*]Allows compatible mods to register batteries, devices, loads, and dynamic demand providers through the public API
+[/list]
+
+[h2]Release Scope[/h2]
+
+The current release focuses on batteries, portable devices, energy transactions, and the systems required by lightWorks and Project Nightfall. Full electrical-grid infrastructure is planned for later releases and is not represented as complete gameplay.
+
+[h2]Upcoming Features[/h2]
+
+[list]
+[*]Complete single-player, hosted, and dedicated-server validation
+[*]Measured generator-surplus and mutation adapters once native output capacity can be verified
+[*]Distribution boxes, cables, extension leads, and powered-equipment infrastructure
+[*]Car-battery harnesses and stationary storage with health and charge limits
+[*]Charging connected storage only from measured generator surplus
+[*]Inverter-backed discharge into a verified building-power adapter
+[*]Bounded unloaded-chunk simulation, diagnostics, and server-administration commands
+[*]Provider-owned outage, damage, surge, restoration, and solar-derating handlers built on the validated event-ingress contract
+[/list]
+
+[h2]Dependencies[/h2]
+
+B47ANCE'd Power has no required mod dependencies.
+
+[h2]Compatibility[/h2]
+
+Other mods can register battery types, powered devices, installed loads, and demand providers through the public API. Unsupported or failed providers are isolated so they cannot break normal device processing.
+
+[i]Dedicated-server multiplayer compatibility has not yet been certified.[/i]
+
+[h2]Credits[/h2]
+
+[b]B47ANCE[/b]
+Project Director
+Lead Designer
+Creative Director
+Gameplay and Systems Designer
+Producer
+Art Director
+
+[b]OpenAI Codex[/b]
+Lead Developer
+Software Architect
+Systems Engineer
+API Researcher
+Technical Designer
+Compatibility Engineer
+QA Automation Developer
+Technical Writer and Documentation Maintainer
+
+[h2]Workshop Information[/h2]
+
+[b]Workshop ID:[/b] 3788592598
+[b]Mod ID:[/b] B47ANCE'd Power
