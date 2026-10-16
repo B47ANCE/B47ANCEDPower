@@ -1,6 +1,7 @@
 local B47ANCEDPower=require "B47ANCEDPower/Definitions"
 
 local function migratePlayer(player)
+    if not B47ANCEDPower.isAuthority() then return false,"non-authority" end
     if not player then return end
     local lights={}
     local lightWorks=rawget(_G,"lightWorks")

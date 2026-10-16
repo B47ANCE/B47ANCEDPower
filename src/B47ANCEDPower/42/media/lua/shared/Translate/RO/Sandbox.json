@@ -29,5 +29,9 @@
   "Sandbox_B47ANCEDPower_BatteryPackAssemblyEfficiency_tooltip": "Fraction of the consumed cells' remaining energy retained by a taped battery pack.",
   "Sandbox_B47ANCEDPower_DigitalWatchDrainPerMinute_tooltip": "Absolute coin-cell capacity consumed per game minute. Zero disables watch drain.",
   "Sandbox_B47ANCEDPower_CoinCellLootChance_tooltip": "Independent chance applied when eligible electronics containers are generated.",
-  "Sandbox_B47ANCEDPower_SolarMilitaryWatchLootChance_tooltip": "Independent rare chance applied to eligible military loot contexts."
+  "Sandbox_B47ANCEDPower_SolarMilitaryWatchLootChance_tooltip": "Independent rare chance applied to eligible military loot contexts.",
+  "Sandbox_B47ANCEDPower_ExtraBatteryLootMultiplier": "Extra sized-battery loot multiplier",
+  "Sandbox_B47ANCEDPower_ExtraBatteryLootMultiplier_tooltip": "Scales extra AAA, AA, C, D, 9V and rechargeable pack rolls in electronics containers. Zero disables these additions. Does not change vanilla battery conversion weights or the separate coin-cell chance. Default: 1.",
+  "Sandbox_B47ANCEDPower_AdapterMagazineLootChance": "Adapter magazine loot chance",
+  "Sandbox_B47ANCEDPower_AdapterMagazineLootChance_tooltip": "Chance per eligible literature container to add the adapter recipe magazine. Zero disables it. Range: 0 to 1. Default: 0.012."
 }

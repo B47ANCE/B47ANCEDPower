@@ -33,7 +33,7 @@ function B47ANCEDPower.BatteryAction:isValid()
     if not self.character then return false end
     local consumer=self:resolveConsumer();if not consumer then return false end
     local data=call(consumer,"getModData")
-    if type(data)=="table" and data.B47ANCEDPowerServiceRecovery~=nil then return false end
+    if type(data)=="table" and (data.B47ANCEDPowerServiceRecovery~=nil or data.B47ANCEDPowerEnergyRecovery~=nil) then return false end
     if call(self.character,"isDead")~=false or not owned(self.character,consumer) then return false end
     if self.mode=="install" or self.mode=="replace" then
         if self.battery==consumer or not ownedInput(self.character,self.battery) then return false end
@@ -58,7 +58,9 @@ function B47ANCEDPower.BatteryAction:isValid()
 end
 function B47ANCEDPower.BatteryAction:update() call(self:resolveConsumer(),"setJobDelta",self:getJobDelta()) end
 function B47ANCEDPower.BatteryAction:start()
-    local consumer=self:resolveConsumer();call(consumer,"setJobType",self.mode=="remove" and "Removing Battery" or "Installing Battery");call(consumer,"setJobDelta",0)
+    local key=self.mode=="remove" and "ContextMenu_B47ANCEDPower_RemovingBattery" or "ContextMenu_B47ANCEDPower_InstallingBattery"
+    local label=type(getText)=="function" and getText(key) or key
+    local consumer=self:resolveConsumer();call(consumer,"setJobType",label);call(consumer,"setJobDelta",0)
 end
 function B47ANCEDPower.BatteryAction:stop()
     call(self:resolveConsumer(),"setJobDelta",0)
@@ -80,6 +82,9 @@ function B47ANCEDPower.BatteryAction:complete()
     local consumer=self:resolveConsumer();if not consumer then return false end
     local called,ok,reason=pcall(operation,self.character,consumer,self.battery)
     if not called or ok~=true then
+        Access.syncConsumer(self.character,consumer,self.parentWeapon)
+        local inputs=setInput and self.battery or {self.battery}
+        for _,item in ipairs(inputs) do if type(syncItemModData)=="function" then pcall(syncItemModData,self.character,item) end end
         pcall(print,"[B47ANCE'd Power] Battery completion failed; inspect state before retry: "..tostring(called and reason or ok))
         return false
     end

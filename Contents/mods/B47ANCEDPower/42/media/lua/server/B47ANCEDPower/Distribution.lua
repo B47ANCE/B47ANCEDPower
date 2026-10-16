@@ -36,18 +36,19 @@ local function onFillContainer(roomType,containerType,container)
         or context:find("magazine",1,true)
     local military=context:find("military",1,true) or context:find("army",1,true)
         or context:find("surplus",1,true)
+    local multiplier=math.max(0,math.min(10,tonumber(B47ANCEDPower.Config.ExtraBatteryLootMultiplier) or 1))
     if electronics then
         if roll(math.max(0,math.min(1,tonumber(B47ANCEDPower.Config.CoinCellLootChance) or 0.10))) then
             add(container,"B47ANCEDPower.BatteryCoin")
         end
-        if roll(0.08) then add(container,"B47ANCEDPower.BatteryAAA") end
-        if roll(0.10) then add(container,"B47ANCEDPower.BatteryAA") end
-        if roll(0.045) then add(container,"B47ANCEDPower.BatteryC") end
-        if roll(0.04) then add(container,"B47ANCEDPower.BatteryD") end
-        if roll(0.025) then add(container,"B47ANCEDPower.Battery9V") end
-        if roll(0.01) then add(container,"B47ANCEDPower.BatteryLithiumPack") end
+        if roll(math.min(1,0.08*multiplier)) then add(container,"B47ANCEDPower.BatteryAAA") end
+        if roll(math.min(1,0.10*multiplier)) then add(container,"B47ANCEDPower.BatteryAA") end
+        if roll(math.min(1,0.045*multiplier)) then add(container,"B47ANCEDPower.BatteryC") end
+        if roll(math.min(1,0.04*multiplier)) then add(container,"B47ANCEDPower.BatteryD") end
+        if roll(math.min(1,0.025*multiplier)) then add(container,"B47ANCEDPower.Battery9V") end
+        if roll(math.min(1,0.01*multiplier)) then add(container,"B47ANCEDPower.BatteryLithiumPack") end
     end
-    if literature and roll(0.012) then add(container,"B47ANCEDPower.BatteryAdapterMagazine") end
+    if literature and roll(math.max(0,math.min(1,tonumber(B47ANCEDPower.Config.AdapterMagazineLootChance) or .012))) then add(container,"B47ANCEDPower.BatteryAdapterMagazine") end
     if military and roll(math.max(0,math.min(1,tonumber(B47ANCEDPower.Config.SolarMilitaryWatchLootChance) or 0.003))) then
         add(container,roll(0.5) and "B47ANCEDPower.SolarMilitaryWatch_Left" or "B47ANCEDPower.SolarMilitaryWatch_Right")
     end

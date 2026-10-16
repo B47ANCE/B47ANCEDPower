@@ -1,48 +1,53 @@
-local minuteCallback,commandCallback
-Events={
-    EveryOneMinute={Add=function(callback) minuteCallback=callback end},
-    OnClientCommand={Add=function(callback) commandCallback=callback end},
-}
-local consumed,initialized,synced=0,0,0
-local item={data={},id=42,alarm=false}
-function item:getID() return self.id end
-function item:getModData() return self.data end
-function item:isAlarmSet() return self.alarm end
-function item:setAlarmSet(value) self.alarm=value end
-local player={}
-local api={
-    Config={DigitalWatchDrainPerMinute=0.25},
-    findOwnedItemById=function(got,id,limit)
-        assert(got==player and limit==512)
-        return id==42 and item or nil,id==42 and nil or "not found"
-    end,
-    getConsumerProfile=function(got) return got==item and {provider="B47ANCEDPowerWatch"} or nil end,
-    getInstalledBatteryType=function(got) return got.data.B47ANCEDPower and got.data.B47ANCEDPower.batteryType end,
-    initializeEmbeddedBattery=function(got,battery,fraction)
-        assert(got==item and battery=="B47ANCEDPower.BatteryCoin" and fraction>=.25 and fraction<=1)
-        initialized=initialized+1; got.data.B47ANCEDPower={batteryType=battery,chargeFraction=fraction}; return true
-    end,
-    consumeEnergy=function(got,amount) assert(got==item and amount==.25); consumed=consumed+1; return true end,
-}
-local realRequire=require
-require=function(name) if name=="B47ANCEDPower/Definitions" then return api end return realRequire(name) end
-syncItemModData=function(gotPlayer,gotItem) assert(gotPlayer==player and gotItem==item); synced=synced+1 end
-
-local server=dofile(assert(arg[1]))
-assert(type(commandCallback)=="function" and type(minuteCallback)=="function")
-commandCallback("other","maintainWatch",player,{itemId=42})
-assert(consumed==0)
-commandCallback("B47ANCEDPower","maintainWatch",player,{itemId=42})
-assert(initialized==1 and consumed==1 and synced==1 and item.data.B47ANCEDPowerWatchInitialized)
-commandCallback("B47ANCEDPower","maintainWatch",player,{itemId=42})
-assert(consumed==1,"duplicate requests in one server minute must be ignored")
-minuteCallback()
-commandCallback("B47ANCEDPower","maintainWatch",player,{itemId=42})
-assert(initialized==1 and consumed==2 and synced==2)
+local Power=require "B47ANCEDPower/Definitions"
+local clock=600
+getGameTime=function()return{getWorldAgeHours=function()return clock/60 end}end
+isClient=function()return false end;isServer=function()return true end
+ZombRand=function()return 0 end
+local tick,command
+Events={EveryOneMinute={Add=function(fn)tick=fn end},OnClientCommand={Add=function(fn)command=fn end}}
+local root,bag={},{}
+local player={getInventory=function()return root end,isDead=function()return false end}
+local watch={data={},alarm=true}
+function watch:getFullType()return "Base.WristWatch_Right_DigitalBlack" end
+function watch:getModData()return self.data end
+function watch:getID()return 42 end
+function watch:getCurrentUsesFloat()return 1 end -- inherited generic native field is NOT its charge surface
+function watch:getOutermostContainer()return root end
+function watch:getContainer()return bag end
+function watch:isAlarmSet()return self.alarm end
+function watch:setAlarmSet(v)self.alarm=v end
+function watch:stopRinging()self.stopped=true end
+function watch:syncAlarmClock()self.alarmSynced=true end
+local broken={getFullType=watch.getFullType,getModData=function()error("broken item")end,getOutermostContainer=function()return root end}
+local containerItem={getInventory=function()return bag end,getOutermostContainer=function()return root end}
+local rootItems={broken,containerItem}
+root.getItems=function()return{size=function()return #rootItems end,get=function(_,i)return rootItems[i+1]end}end
+bag.getItems=function()return{size=function()return 1 end,get=function()return watch end}end
+getOnlinePlayers=function()return{size=function()return 1 end,get=function()return player end}end
+local syncs=0;syncItemModData=function(p,item)assert(p==player and item==watch);syncs=syncs+1 end
+Power.Config.DigitalWatchDrainPerMinute=.001
+local server=dofile(arg[1])
+assert(type(tick)=="function" and type(command)=="function")
+tick() -- discovers nested watch without ANY client request; isolates earlier broken watch
+assert(watch.data.B47ANCEDPowerWatchInitialized and watch.data.B47ANCEDPower.chargeFraction==.25)
+assert(Power.findOwnedItemById(player,42,512)==watch,"real lookup must traverse nested containers")
+clock=clock+2;tick()
+assert(math.abs(watch.data.B47ANCEDPower.chargeFraction-(.0625-.002)/.25)<.0000001)
+local fraction=watch.data.B47ANCEDPower.chargeFraction
+assert(server.handleWatchMaintenance(player,{itemId=42}))
+assert(watch.data.B47ANCEDPower.chargeFraction==fraction,"duplicate requests cannot accelerate drain")
 assert(not server.handleWatchMaintenance(player,{itemId=99}))
-item.data.B47ANCEDPowerServiceRecovery={}
-minuteCallback()
-assert(not server.handleWatchMaintenance(player,{itemId=42}))
-assert(consumed==2,"quarantined watches must not drain")
-
-print("B47ANCEDPower server-authoritative watch maintenance checks passed")
+assert(not server.handleWatchMaintenance(player,{itemId=0/0}))
+watch.data.B47ANCEDPowerEnergyRecovery={};clock=clock+1;tick()
+assert(watch.data.B47ANCEDPower.chargeFraction==fraction,"energy reservation blocks background drain")
+watch.data.B47ANCEDPowerEnergyRecovery=nil
+package.loaded["B47ANCEDPower/WatchServer"]=nil
+require "B47ANCEDPower/WatchServer" -- persisted item clock survives module restart
+clock=clock+1;tick()
+assert(watch.data.B47ANCEDPower.chargeFraction<fraction)
+watch.data.B47ANCEDPower.chargeFraction=0;clock=clock+1;tick()
+assert(watch.alarm==false and watch.stopped and watch.alarmSynced,"empty watch alarm is disabled and synchronized")
+watch.data.B47ANCEDPowerServiceRecovery={};fraction=watch.data.B47ANCEDPower.chargeFraction;clock=clock+1;tick()
+assert(watch.data.B47ANCEDPower.chargeFraction==fraction)
+assert(syncs>0)
+print("B47ANCEDPower real server watch scheduling, nested lookup, restart and alarm checks passed")

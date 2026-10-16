@@ -1,5 +1,9 @@
 # B47ANCE'd Power identity migration
 
+Historical 0.16.0 record. Git state, validation counts and implementation claims
+below describe that rename checkpoint; current repairs and backup status are
+recorded separately in [AUDIT_REMEDIATION.md](AUDIT_REMEDIATION.md).
+
 Project Version: 0.16.0
 
 ## Decision and compatibility

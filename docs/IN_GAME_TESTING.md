@@ -1,8 +1,11 @@
 # B47ANCE'd Power in-game validation
 
-Current development version: `0.16.0`. Enable Mod ID `B47ANCEDPower` on a fresh
+Current development version: `0.17.0-dev.1`. Enable Mod ID `B47ANCEDPower` on a fresh
 disposable save. Reconfigure sandbox settings; do not load a prior-identity save
 to test this breaking rename. This document is a procedure, not runtime evidence.
+
+For the current standalone audit checks, follow [RUNTIME_VALIDATION.md](RUNTIME_VALIDATION.md).
+The progressive Nightfall integration procedure below retains its own earlier-stage gates.
 
 B47ANCEDPower is stage 4 of the progressive Nightfall test. Begin only after the
 first three reports are reviewed as PASS. Test B47ANCEDPower alone on a disposable

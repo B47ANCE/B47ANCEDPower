@@ -1,5 +1,10 @@
 # B47ANCE'd Power Architecture
 
+Current authority/storage contracts and additive timestamp/retention fields are
+in [AUDIT_REMEDIATION.md](AUDIT_REMEDIATION.md). Shared mutations and background
+watch maintenance are server/SP owned; clients submit intent and render results.
+Native packet delivery and dedicated persistence remain runtime gates.
+
 The `0.16.0` identity change renames all project-owned namespaces without changing
 the authority model, energy calculations or schema numbers. Prior identity saves
 and sandbox settings are not migrated. See [IDENTITY_MIGRATION.md](IDENTITY_MIGRATION.md)

@@ -1,3 +1,21 @@
+[b]Version 0.17.0-dev.1[/b]
+
+[h2]Audit repairs — development build[/h2]
+Fixes native and ModData charge reads, write verification, energy reservation
+exclusion, authoritative initialization/migration and multi-cell removal sync.
+Server/SP watch scheduling now discovers bounded owned nested inventory and
+uses item-owned world time, independent of client maintenance requests.
+Bounds event replay maps with a persistent eviction floor; recovers status
+requests after timeout or reconnect; rejects empty test discovery.
+Adds grouped server sandbox controls for extra battery loot and adapter magazines,
+localized action/status labels, and explicit manual persistence observations.
+
+Dedicated multiplayer NOT TESTED. Stable-release G8 BLOCKED.
+Source and regression coverage: https://github.com/B47ANCE/B47ANCEDPower
+This local source update does not imply deployment or a Workshop upload.
+
+[h2]Historical change notes[/h2]
+
 [b]Version 0.16.0[/b]
 
 [h2]B47ANCE'd Power identity migration[/h2]

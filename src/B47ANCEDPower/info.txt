@@ -5,5 +5,5 @@ Portable power, built to expand.
 B47ANCE'd Power provides sized and coin cells, persistent charge, timed battery servicing, capacity-aware drain, bounded electrical providers, environmental-event ingress, and public device/load APIs.
 
 Author: B47ANCE
-Version: 0.16.0
+Version: 0.17.0-dev.1
 Mod ID: B47ANCEDPower

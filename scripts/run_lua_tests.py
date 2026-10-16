@@ -1,6 +1,7 @@
 """Run each host Lua test in an isolated Lua 5.1 VM; never launch PZ."""
 import argparse
 import json
+import os
 from pathlib import Path
 import sys
 
@@ -8,13 +9,17 @@ import sys
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--mod-id', default='B47ANCEDPower')
+    parser.add_argument('--root',type=Path,default=Path(__file__).resolve().parents[1])
     args = parser.parse_args()
     try:
         from lupa.lua51 import LuaRuntime
     except ImportError:
         print('BLOCKED: host tests require the development-only lupa Lua 5.1 runtime.')
         return 2
-    root = Path.cwd()
+    root = args.root.resolve()
+    if not (root/'VERSION').is_file() or not (root/'tests').is_dir() or not (root/'src'/args.mod_id/'42/mod.info').is_file():
+        parser.error('invalid project root: canonical version, tests and source metadata are required')
+    os.chdir(root)
     mod = root / 'src' / args.mod_id / '42' / 'media' / 'lua'
     shared = mod / 'shared' / args.mod_id
     paths = {
@@ -47,6 +52,9 @@ def main():
             except Exception as exc:
                 failures.append((str(path.relative_to(root)), str(exc)))
     tests = sorted((root / 'tests').glob('test_*.lua'))
+    if not tests or syntax==0:
+        print('FAIL: empty test or production Lua discovery')
+        return 1
     for test in tests:
         vm = LuaRuntime(unpack_returned_tuples=True)
         messages = []

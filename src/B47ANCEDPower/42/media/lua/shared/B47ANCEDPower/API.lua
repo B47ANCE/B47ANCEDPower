@@ -1,39 +1,18 @@
 B47ANCEDPower=B47ANCEDPower or {}
 local B47ANCEDPower=B47ANCEDPower
 local ItemAccess=require "B47ANCEDPower/ItemAccess"
+local Sandbox=require "B47ANCEDPower/Sandbox"
 
-B47ANCEDPower.VERSION="0.16.0"
+B47ANCEDPower.VERSION="0.17.0-dev.1"
 B47ANCEDPower.Batteries=B47ANCEDPower.Batteries or {}
 B47ANCEDPower.Consumers=B47ANCEDPower.Consumers or {}
 B47ANCEDPower.Loads=B47ANCEDPower.Loads or {}
-B47ANCEDPower.Config=B47ANCEDPower.Config or {
-    BatteryCapacityMultiplier=1.0,
-    GlobalConsumptionMultiplier=1.0,
-    UVConsumptionMultiplier=1.0,
-    EnableImprovisedAdapters=true,
-    ImprovisedEfficiencyMultiplier=1.0,
-    ImprovisedResistanceMultiplier=1.0,
-    EnableVanillaBatteryLootConversion=true,
-    LootWeightAAA=30,
-    LootWeightAA=42,
-    LootWeightC=10,
-    LootWeightD=10,
-    LootWeight9V=6,
-    LootWeightLithiumPack=2,
-    BatteryServiceTimeMultiplier=1.0,
-    ToolAssistedReplaceTimeBonus=0.10,
-    DefaultBatteryInstallTime=55,
-    DefaultBatteryRemoveTime=35,
-    BatteryPackAssemblyEfficiency=0.90,
-    DigitalWatchDrainPerMinute=0.0000002,
-    CoinCellLootChance=0.10,
-    SolarMilitaryWatchLootChance=0.003,
-}
+B47ANCEDPower.Config=B47ANCEDPower.Config or Sandbox.read(nil)
 local function applySandbox()
     local root=rawget(_G,"SandboxVars")
     local values=root and root.B47ANCEDPower or nil
     if not values then return false end
-    for key in pairs(B47ANCEDPower.Config) do if values[key]~=nil then B47ANCEDPower.Config[key]=values[key] end end
+    for key,value in pairs(Sandbox.read(values)) do B47ANCEDPower.Config[key]=value end
     return true
 end
 B47ANCEDPower.applySandbox=applySandbox
@@ -72,6 +51,31 @@ end
 local function authoritative()
     return not (type(isClient)=="function" and isClient()==true
         and not (type(isServer)=="function" and isServer()==true))
+end
+B47ANCEDPower.isAuthority=authoritative
+local function finite(value)
+    value=tonumber(value)
+    return value and value==value and math.abs(value)<math.huge and value or nil
+end
+local function pendingEnergy(item)
+    local data=modData(item)
+    return type(data)=="table" and data.B47ANCEDPowerEnergyRecovery~=nil
+end
+local function readNativeFraction(item)
+    for _,entry in ipairs({{"getCurrentUsesFloat","currentUsesFloat"},{"getUsedDelta","usedDelta"}}) do
+        local ok,value=call(item,entry[1]);value=finite(value)
+        if ok and value then return true,clamp(value,0,1),entry[2] end
+    end
+    return false,nil,nil
+end
+local function writeNativeFraction(item,value,mode)
+    local getter=mode=="currentUsesFloat" and "getCurrentUsesFloat" or "getUsedDelta"
+    local setter=mode=="currentUsesFloat" and "setCurrentUsesFloat" or "setUsedDelta"
+    local available,fn=pcall(function()return item[setter]end)
+    if not available or type(fn)~="function" then setter="setUsedDelta" end
+    call(item,setter,value)
+    local ok,actual=call(item,getter);actual=finite(actual)
+    return ok and actual~=nil and math.abs(actual-value)<=0.000001
 end
 
 function B47ANCEDPower.registerBattery(def)
@@ -147,18 +151,28 @@ end
 
 function B47ANCEDPower.getCharge(item)
     local profile=B47ANCEDPower.getBatteryProfile(item); if not profile then return nil end
-    local data=modData(item)
-    if data and tonumber(data.B47ANCEDPowerCharge) then return clamp(tonumber(data.B47ANCEDPowerCharge),0,profile.capacity) end
-    local ok,delta=call(item,"getUsedDelta")
-    if ok and tonumber(delta) then return clamp(tonumber(delta),0,1)*profile.capacity end
-    return profile.capacity
+    local ok,delta=readNativeFraction(item)
+    if ok then
+        local energy=delta*profile.capacity
+        local data=modData(item)
+        local absolute=type(data)=="table" and finite(data.B47ANCEDPowerCharge) or nil
+        -- Native discharge can only reduce a previously recorded energy budget.
+        -- A capacity-setting increase must not multiply an existing cell's energy;
+        -- explicit authoritative charging updates both surfaces through setCharge.
+        if absolute then energy=math.min(energy,math.max(0,absolute)) end
+        return energy
+    end
+    return nil,"battery charge unavailable"
 end
 
 function B47ANCEDPower.setCharge(item,charge)
+    if not authoritative() then return false,"non-authority" end
     local profile=B47ANCEDPower.getBatteryProfile(item); if not profile then return false end
-    charge=clamp(tonumber(charge) or 0,0,profile.capacity)
-    local data=modData(item); if data then data.B47ANCEDPowerCharge=charge end
-    call(item,"setUsedDelta",charge/profile.capacity)
+    charge=finite(charge);if not charge then return false,"invalid battery charge" end
+    charge=clamp(charge,0,profile.capacity)
+    local read,_,mode=readNativeFraction(item)
+    if not read or not writeNativeFraction(item,charge/profile.capacity,mode) then return false,"battery write unverified" end
+    local data=modData(item);if type(data)=="table" then data.B47ANCEDPowerCharge=charge end
     return true
 end
 
@@ -180,17 +194,18 @@ local function stateFor(consumer,create)
     return type(data.B47ANCEDPower)=="table" and data.B47ANCEDPower or nil
 end
 local function readConsumerCharge(consumer)
-    local ok,value=call(consumer,"getUsedDelta")
-    if ok and tonumber(value)~=nil then return true,clamp(tonumber(value),0,1),"usedDelta" end
-    ok,value=call(consumer,"getCurrentUsesFloat")
-    if ok and tonumber(value)~=nil then return true,clamp(tonumber(value),0,1),"currentUsesFloat" end
     local profile=B47ANCEDPower.getConsumerProfile(consumer)
     local state=stateFor(consumer,false)
-    if profile and profile.storageMode=="modData" then
-        return true,clamp(tonumber(state and state.chargeFraction) or 0,0,1),"modData"
+    if (profile and profile.storageMode=="modData") or (state and state.storageMode=="modData") then
+        local value=state and state.chargeFraction
+        if value==nil and not (state and state.batteryType) then return true,0,"modData" end
+        value=finite(value)
+        if not value then return false,nil,"modData" end
+        return true,clamp(value,0,1),"modData"
     end
-    return false,nil,nil
+    return readNativeFraction(consumer)
 end
+B47ANCEDPower.readConsumerCharge=readConsumerCharge
 
 -- Canonical read-only power decision for consumer frameworks. Callers should
 -- never infer power from the presence of a battery record alone: native charge
@@ -224,7 +239,9 @@ function B47ANCEDPower.getConsumerPowerState(consumer)
         legacy=batteryType==nil and fraction>0.000001}
 end
 local function writeConsumerCharge(consumer,value,mode)
-    value=clamp(tonumber(value) or 0,0,1)
+    if not authoritative() then return false,"non-authority" end
+    value=finite(value);if not value then return false end
+    value=clamp(value,0,1)
     if mode=="modData" then
         local state=stateFor(consumer,true); if not state then return false end
         state.chargeFraction=value
@@ -233,18 +250,18 @@ local function writeConsumerCharge(consumer,value,mode)
     -- A callable native method (or a mod wrapper) may silently do nothing.
     -- Verify the same storage surface selected by readConsumerCharge; never
     -- write a different surface and assume the device now uses that value.
-    local setter=mode=="currentUsesFloat" and "setCurrentUsesFloat" or "setUsedDelta"
-    local getter=mode=="currentUsesFloat" and "getCurrentUsesFloat" or "getUsedDelta"
-    call(consumer,setter,value)
-    local checked,actual=call(consumer,getter)
-    return checked and type(actual)=="number" and actual==actual
-        and math.abs(actual-value)<=0.000001
+    return writeNativeFraction(consumer,value,mode)
 end
+B47ANCEDPower.writeConsumerCharge=writeConsumerCharge
 function B47ANCEDPower.getInstalledBatteryType(consumer)
     local state=stateFor(consumer,false)
     return state and state.batteryType or nil
 end
 function B47ANCEDPower.initializeEmbeddedBattery(consumer,batteryType,fraction)
+    if not authoritative() then return false,"non-authority" end
+    if pendingEnergy(consumer) then return false,"pending energy transaction" end
+    local initial=fraction==nil and 1 or finite(fraction)
+    if not initial or initial<0 or initial>1 then return false,"invalid initial charge" end
     local data=modData(consumer)
     if type(data)~="table" or data.B47ANCEDPowerServiceRecovery~=nil then return false,"consumer requires inspection" end
     if B47ANCEDPower.getInstalledBatteryType(consumer) then return false,"already initialized" end
@@ -261,7 +278,7 @@ function B47ANCEDPower.initializeEmbeddedBattery(consumer,batteryType,fraction)
     state.batteryType=cell.item; state.capacity=cell.capacity
     state.baseUseDelta=tonumber(device.baseUseDelta) or 0
     state.resistance=1; state.storageMode=device.storageMode or "modData"
-    state.chargeFraction=clamp(tonumber(fraction) or 1,0,1)
+    state.chargeFraction=initial
     local called,refreshed=pcall(B47ANCEDPower.refreshConsumer,consumer)
     if not called or refreshed~=true then
         restoreTable(state,snapshot)
@@ -304,6 +321,8 @@ end
 -- B47ANCEDPower state. No physical battery is created or consumed: this is the
 -- battery that was already inside the device.
 function B47ANCEDPower.migrateInstalledLegacyBattery(consumer)
+    if not authoritative() then return false,"non-authority" end
+    if pendingEnergy(consumer) then return false,"pending energy transaction" end
     local data=modData(consumer)
     if type(data)~="table" or data.B47ANCEDPowerServiceRecovery~=nil then return false,"consumer requires inspection" end
     if data.B47ANCEDPower~=nil and type(data.B47ANCEDPower)~="table" then return false,"malformed consumer state" end
@@ -379,6 +398,8 @@ function B47ANCEDPower.getConsumerEnergyRatePerHour(consumer)
 end
 
 function B47ANCEDPower.refreshConsumer(consumer)
+    if not authoritative() then return false,"non-authority" end
+    if pendingEnergy(consumer) then return false,"pending energy transaction" end
     local state=stateFor(consumer,false)
     local device=B47ANCEDPower.getConsumerProfile(consumer)
     if not state or not state.batteryType or not device or not state.baseUseDelta then return false end
@@ -474,6 +495,10 @@ function B47ANCEDPower.rollbackEnergyTransaction(consumer,operationId)
     local data=modData(consumer); local record=type(data)=="table" and data[ENERGY_RECOVERY_KEY] or nil
     if type(record)~="table" or record.operationId~=operationId
         or (record.status~="reserved" and record.status~="executing") then return false,"energy reservation unavailable" end
+    local unchanged,current=readConsumerCharge(consumer)
+    if not unchanged or not finite(record.afterFraction) or math.abs(current-record.afterFraction)>0.000001 then
+        record.status="inspection_required";return false,"energy reservation changed; inspection required"
+    end
     local wrote=writeConsumerCharge(consumer,record.beforeFraction,record.storageMode)
     local read,current=readConsumerCharge(consumer)
     if not wrote or not read or math.abs(current-record.beforeFraction)>0.000001 then
@@ -489,35 +514,46 @@ function B47ANCEDPower.inspectEnergyRecovery(consumer)
 end
 B47ANCEDPower.ENERGY_RECOVERY_KEY=ENERGY_RECOVERY_KEY
 
-function B47ANCEDPower.findOwnedItemById(player,itemId,limit)
-    itemId=tonumber(itemId)
-    if not player or not itemId or itemId~=itemId then return nil,"invalid item id" end
+function B47ANCEDPower.visitOwnedInventory(player,callback,limit)
+    if not player or type(callback)~="function" then return false,"invalid visitor" end
     local gotRoot,root=call(player,"getInventory")
-    if not gotRoot or not root then return nil,"player inventory unavailable" end
-    limit=math.max(1,math.floor(tonumber(limit) or 512))
+    if not gotRoot or not root then return false,"player inventory unavailable" end
+    limit=math.max(1,math.min(512,math.floor(finite(limit) or 512)))
     local queue={root}; local head,visited=1,0
+    local seen={[root]=true}
     while head<=#queue and visited<limit do
         local container=queue[head]; head=head+1
         local gotItems,items=call(container,"getItems")
-        local gotSize,size=gotItems and call(items,"size") or false,nil
-        if gotSize and type(size)=="number" then
+        local gotSize,size=false,nil
+        if gotItems then gotSize,size=call(items,"size") end
+        size=finite(size)
+        if gotSize and size and size>=0 then
             for index=0,math.min(math.floor(size)-1,limit-visited-1) do
+                visited=visited+1
                 local gotItem,item=call(items,"get",index)
                 if gotItem and item then
-                    visited=visited+1
-                    local identified,id=call(item,"getID")
-                    if identified and tonumber(id)==itemId then
-                        local gotOuter,outer=call(item,"getOutermostContainer")
-                        if gotOuter and outer==root then return item end
-                        return nil,"item ownership mismatch"
+                    local gotOuter,outer=call(item,"getOutermostContainer")
+                    if gotOuter and outer==root then
+                        if callback(item)==false then return true,{visited=visited,stopped=true} end
+                        local gotNested,nested=call(item,"getInventory")
+                        if gotNested and nested and not seen[nested] then queue[#queue+1]=nested;seen[nested]=true end
                     end
-                    local gotNested,nested=call(item,"getInventory")
-                    if gotNested and nested then queue[#queue+1]=nested end
                 end
             end
         end
     end
-    return nil,visited>=limit and "inventory search budget exceeded" or "item not found"
+    return true,{visited=visited,truncated=visited>=limit}
+end
+function B47ANCEDPower.findOwnedItemById(player,itemId,limit)
+    itemId=finite(itemId)
+    if not itemId or itemId~=math.floor(itemId) then return nil,"invalid item id" end
+    local found
+    local ok,report=B47ANCEDPower.visitOwnedInventory(player,function(item)
+        local identified,id=call(item,"getID")
+        if identified and id==itemId then found=item;return false end
+    end,limit)
+    if found then return found end
+    return nil,not ok and report or (report.truncated and "inventory search budget exceeded" or "item not found")
 end
 
 -- Runtime references are held only while a synchronous service is executing.
@@ -767,6 +803,7 @@ local function service(player,consumer,battery,mode,operation)
     local data=modData(consumer)
     if not player or type(data)~="table" then return false,"consumer state unavailable" end
     if data.B47ANCEDPowerServiceRecovery~=nil then return false,"battery service requires inspection" end
+    if pendingEnergy(consumer) or (battery and pendingEnergy(battery)) then return false,"pending energy transaction" end
     local batteryData=battery and modData(battery) or nil
     if battery then
         if battery==consumer or type(batteryData)~="table" then return false,"battery state unavailable" end
@@ -948,6 +985,7 @@ require "B47ANCEDPower/InfrastructureEvents"
 require "B47ANCEDPower/InfrastructureDiagnostics"
 
 function B47ANCEDPower.makeAdapter(source,result,targetType)
+    if not authoritative() then return false,"non-authority" end
     if B47ANCEDPower.Config.EnableImprovisedAdapters==false then return false,"improvised adapters disabled" end
     local sourceProfile=B47ANCEDPower.getBatteryProfile(source)
     local targetProfile=B47ANCEDPower.getBatteryProfile(targetType or result)
@@ -967,6 +1005,7 @@ function B47ANCEDPower.makeAdapter(source,result,targetType)
 end
 
 function B47ANCEDPower.onCreateImprovisedAA(recipeData)
+    if not authoritative() then return false,"non-authority" end
     local okResult,result=call(recipeData,"getFirstCreatedItem")
     local okItems,items=call(recipeData,"getAllConsumedItems")
     if not okResult or not result or not okItems or not items then return end
@@ -980,6 +1019,7 @@ function B47ANCEDPower.onCreateImprovisedAA(recipeData)
 end
 
 function B47ANCEDPower.onCreateBatteryPack(recipeData)
+    if not authoritative() then return false,"non-authority" end
     local okResult,result=call(recipeData,"getFirstCreatedItem")
     local okItems,items=call(recipeData,"getAllConsumedItems")
     if not okResult or not result or not okItems or not items then return end

@@ -1,3 +1,4 @@
+getTimestampMs=function()return 1000 end
 local sent={}; local callback=nil; local dirty=0
 sendClientCommand=function(_,_,_,args)sent[#sent+1]=args end
 Events={OnServerCommand={Add=function(fn)callback=fn end}}

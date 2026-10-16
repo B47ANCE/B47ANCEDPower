@@ -120,15 +120,44 @@ local function fail(id,reason)
     local entry=failures[id]or{count=0};entry.count=entry.count+1
     entry.lastError=tostring(reason or"handler failure"):sub(1,200);failures[id]=entry
 end
+-- Retention is a technical storage bound. An eviction advances a persistent
+-- time floor so discarding an old stream never makes its exact replay valid.
+local function retain(store)
+    if #store.history>4096 then return false,"oversized legacy history requires inspection" end
+    local floor=finite(store.expiredThrough) or -1
+    local history,processed,latest={},{},{}
+    local start=math.max(1,#store.history-EventsAPI.MAX_HISTORY+1)
+    for index,record in ipairs(store.history) do
+        if type(record)~="table" or not valid(record.eventId,160) or not valid(record.stream,512)
+            or not finite(record.worldAgeHours) or type(record.event)~="table" or not PHASES[record.event.phase] then
+            return false,"malformed legacy event history requires inspection"
+        end
+        if index<start then floor=math.max(floor,record.worldAgeHours)
+        else
+            history[#history+1]=record;processed[record.eventId]=true
+            latest[record.stream]={id=record.eventId,worldAgeHours=record.worldAgeHours,phase=record.event.phase}
+        end
+    end
+    local inspected=0
+    for key,record in pairs(store.latestByStream) do
+        inspected=inspected+1;if inspected>4096 then return false,"oversized legacy streams require inspection" end
+        if not latest[key] then
+            local hour=type(record)=="table" and finite(record.worldAgeHours) or nil
+            if not hour then return false,"malformed legacy stream requires inspection" end
+            floor=math.max(floor,hour)
+        end
+    end
+    store.history=history;store.processed=processed;store.latestByStream=latest;store.expiredThrough=floor
+    return true
+end
 
 function EventsAPI.attachStore(store)
+    if not authoritative() then return false,"non-authority" end
     if type(store)~="table"then return false,"infrastructure event store required"end
     local empty=true;for _ in pairs(store)do empty=false;break end
     if empty then local created=newStore();for key,value in pairs(created)do store[key]=value end end
     if not storeOk(store)then return false,"unsupported infrastructure event store"end
-    while #store.history>EventsAPI.MAX_HISTORY do
-        local old=table.remove(store.history,1);if old and old.eventId then store.processed[old.eventId]=nil end
-    end
+    local retained,reason=retain(store);if not retained then return false,reason end
     for _,record in ipairs(store.history)do
         if type(record)=="table"and record.status=="dispatching"then
             record.status="inspection_required";record.recoveryReason="interrupted handler dispatch"
@@ -152,6 +181,7 @@ function EventsAPI.ingest(value)
     if not attachedStore then return false,"infrastructure event store unavailable"end
     local event,err=normalizeEvent(value);if not event then return false,err end
     if attachedStore.processed[event.id]then return true,{duplicate=true,eventId=event.id}end
+    if event.worldAgeHours<=(attachedStore.expiredThrough or -1) then return false,"event predates retention floor" end
     local key=stream(event);local latest=attachedStore.latestByStream[key]
     if type(latest)=="table"then
         local latestHour=tonumber(latest.worldAgeHours)or 0
@@ -168,11 +198,7 @@ function EventsAPI.ingest(value)
         queryReports=copy(queryReports),handlerResults={}}
     attachedStore.history[#attachedStore.history+1]=record;attachedStore.processed[event.id]=true
     attachedStore.latestByStream[key]={id=event.id,worldAgeHours=event.worldAgeHours,phase=event.phase}
-    while #attachedStore.history>EventsAPI.MAX_HISTORY do
-        local old=table.remove(attachedStore.history,1)
-        if old and old.eventId and(not attachedStore.latestByStream[old.stream]
-            or attachedStore.latestByStream[old.stream].id~=old.eventId)then attachedStore.processed[old.eventId]=nil end
-    end
+    assert(retain(attachedStore))
     attachedStore.revision=(tonumber(attachedStore.revision)or 0)+1
     local uncertain=queryFailed
     for _,handler in ipairs(queryFailed and{}or orderedHandlers())do

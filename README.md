@@ -2,7 +2,7 @@
 
 B47ANCE'd Power is a standalone portable-power framework for Project Zomboid.
 
-- Version: `0.16.0`
+- Version: `0.17.0-dev.1`
 - Mod ID: `B47ANCEDPower`
 - Author: B47ANCE
 - Minimum game version: `42.20.3`
@@ -13,7 +13,7 @@ The authoritative image is `src/B47ANCEDPower/thumbnail.png`; `preview.png` and
 `Contents/mods/B47ANCEDPower/thumbnail.png` contain the same original PNG bytes.
 The existing `poster=thumbnail.png` reference is retained; mod icons are separate.
 
-Version `0.16.0` is a breaking development rename. Enable `B47ANCEDPower`, use a
+The earlier `0.16.0` identity change was a breaking development rename. Enable `B47ANCEDPower`, use a
 fresh disposable save, and reconfigure its sandbox options. Dependent mods must
 update their dependency declarations, Lua imports, globals, item references and
 protocol calls before integration testing. There are no legacy aliases or save
@@ -22,6 +22,19 @@ migration for the previous identity. See [the rename and compatibility record](d
 `VERSION` is the canonical project version. Current mirrors are declared in
 `version-inventory.json`; the policy is [docs/VERSION_POLICY.md](docs/VERSION_POLICY.md).
 G7 dedicated multiplayer is **NOT TESTED / BLOCKED**; stable-release G8 is **BLOCKED**.
+
+## Current audit repairs
+
+This development iteration repairs charge storage, transaction exclusion,
+server-owned watch scheduling, inventory synchronization, bounded event retention
+and status recovery. See [the remediation record](docs/AUDIT_REMEDIATION.md) for
+contracts and offline evidence, and [runtime validation](docs/RUNTIME_VALIDATION.md)
+for the outstanding SP/dedicated checks. The suite includes 25 Lua regression
+files plus 12 targeted audit scenarios; passing mocks is not native runtime proof.
+
+Public source: [B47ANCE/B47ANCEDPower](https://github.com/B47ANCE/B47ANCEDPower).
+The fixes are on `fix/audit-remediation` for PR review. The initial main commit
+preserves the historical 0.16.0 development baseline with its known audit defects.
 
 ## Features
 
@@ -76,9 +89,10 @@ after the connection, charging, discharge, and synchronization spikes pass.
 The authoritative mod root is `src/B47ANCEDPower/` (runtime files under `42/`).
 `Contents/mods/B47ANCEDPower/` is an exact project-local mirror refreshed during
 this rename. Historical packages and staging backups in `dist/` retain their
-original names, content and hashes. No current `0.16.0` ZIP has been created.
+original names, content and hashes. No current development ZIP has been created.
 
-Run `python scripts/check_versions.py --root .`,
+Run `python tests/test_audit_regressions.py`,
+`python scripts/check_versions.py --root .`,
 `python scripts/check_identity.py`, and `python scripts/run_lua_tests.py`
 (the latter requires the development-only `lupa.lua51` host runtime).
 Run `python art/test_asset_coverage.py` and `python art/check_asset_coverage.py`

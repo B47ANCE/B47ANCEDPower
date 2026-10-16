@@ -2,5 +2,14 @@
   "ContextMenu_B47ANCEDPower_RemoveCoinCell": "Remove Coin Cell",
   "ContextMenu_B47ANCEDPower_ReplaceCoinCell": "Replace Coin Cell",
   "ContextMenu_B47ANCEDPower_InsertCoinCell": "Insert Coin Cell",
-  "ContextMenu_B47ANCEDPower_CoinCellCharge": "Coin Cell (%1%)"
+  "ContextMenu_B47ANCEDPower_CoinCellCharge": "Coin Cell (%1%)",
+  "ContextMenu_B47ANCEDPower_RemovingBattery": "Removing Battery",
+  "ContextMenu_B47ANCEDPower_InstallingBattery": "Installing Battery",
+  "ContextMenu_B47ANCEDPower_Infrastructure": "Power infrastructure",
+  "ContextMenu_B47ANCEDPower_Source": "Sources",
+  "ContextMenu_B47ANCEDPower_Storage": "Storage",
+  "ContextMenu_B47ANCEDPower_Load": "Loads",
+  "ContextMenu_B47ANCEDPower_Network": "Networks",
+  "ContextMenu_B47ANCEDPower_Events": "Events",
+  "ContextMenu_B47ANCEDPower_Failures": "Failures"
 }

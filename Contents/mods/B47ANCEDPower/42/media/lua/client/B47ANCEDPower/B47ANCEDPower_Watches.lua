@@ -34,6 +34,7 @@ local function eachInventoryItem(player,callback)
 end
 
 local function ensureWatch(item)
+    if not B47ANCEDPower.isAuthority() then return false,"non-authority" end
     if not isPoweredWatch(item) then return end
     local data=item:getModData()
     if type(data)~="table" or data.B47ANCEDPowerServiceRecovery~=nil then return false end
@@ -62,27 +63,11 @@ local function maintainWatch(item,player)
         if isPoweredWatch(item) then requestMaintenance(player,item) end
         return
     end
-    ensureWatch(item)
-    if not isPoweredWatch(item) then return end
-    local data=item:getModData()
-    if type(data)~="table" or data.B47ANCEDPowerServiceRecovery~=nil then return end
-    if B47ANCEDPower.getInstalledBatteryType(item) then
-        B47ANCEDPower.consumeEnergy(item,math.max(0,tonumber(B47ANCEDPower.Config.DigitalWatchDrainPerMinute) or 0.0000002))
+    if player and type(B47ANCEDPower.handleWatchMaintenance)=="function" then
+        local ok,id=pcall(function()return item:getID()end)
+        if ok then return B47ANCEDPower.handleWatchMaintenance(player,{itemId=id}) end
     end
-    local state=data.B47ANCEDPower
-    if state~=nil and type(state)~="table" then return end
-    if (not state or (tonumber(state.chargeFraction) or 0)<=0) and item.isAlarmSet and item:isAlarmSet() then
-        item:setAlarmSet(false)
-        if item.stopRinging then item:stopRinging() end
-        if item.syncAlarmClock then item:syncAlarmClock() end
-    end
-end
-
-local function updateWatches()
-    for playerIndex=0,3 do
-        local player=getSpecificPlayer(playerIndex)
-        if player then eachInventoryItem(player,function(item) maintainWatch(item,player) end) end
-    end
+    return false,"server watch maintenance unavailable"
 end
 
 local function unwrap(entry)
@@ -96,7 +81,7 @@ local function onContext(playerIndex,context,rawItems)
     for _,entry in ipairs(rawItems) do local item=unwrap(entry); if isPoweredWatch(item) then watch=item break end end
     if not watch then return end
     local player=getSpecificPlayer(playerIndex); if not player then return end
-    ensureWatch(watch)
+    if remoteClient() and not B47ANCEDPower.getInstalledBatteryType(watch) then requestMaintenance(player,watch) end
     local name=watch:getDisplayName(); local option=context:getOptionFromName(name)
     local menu
     if option and option.subOption~=nil then menu=context:getSubMenu(option.subOption) end
@@ -128,7 +113,6 @@ local function safeContext(...)
     if not ok and not reported then reported=true; print("[B47ANCE'd Power] Watch menu failed safely: "..tostring(err)) end
 end
 
-if Events and Events.EveryOneMinute then Events.EveryOneMinute.Add(updateWatches) end
 if Events and Events.OnFillInventoryObjectContextMenu then Events.OnFillInventoryObjectContextMenu.Add(safeContext) end
 B47ANCEDPower.maintainPoweredWatch=maintainWatch
 B47ANCEDPower.ensurePoweredWatch=ensureWatch
