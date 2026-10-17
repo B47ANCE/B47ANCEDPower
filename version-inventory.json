@@ -51,10 +51,6 @@
       "pattern": "^\\[b\\]Mod Version: (?P<version>[^\\[]+)\\[/b\\]$"
     },
     {
-      "path": "docs/IDENTITY_MIGRATION.md",
-      "pattern": "^Project Version: (?P<version>\\S+)$"
-    },
-    {
       "path": "docs/TESTING.md",
       "pattern": "^Project Version: (?P<version>\\S+)$"
     },
@@ -69,6 +65,18 @@
     {
       "path": "tests/test_test_harness.lua",
       "pattern": "local API=\\{VERSION=\"(?P<version>[^\"]+)\""
+    },
+    {
+      "path": "docs/AUDIT_REMEDIATION.md",
+      "pattern": "^Project Version: (?P<version>\\S+)$"
+    },
+    {
+      "path": "docs/VERSIONING.md",
+      "pattern": "^Current development version: (?P<version>\\S+)\\.$"
+    },
+    {
+      "path": "docs/VALIDATION.json",
+      "pattern": "\"project_version\": \"(?P<version>[^\"]+)\""
     }
   ],
   "changelog": {
@@ -117,6 +125,10 @@
     {
       "reference": "art/README.md historical production notes and art/geometry-validation.json",
       "reason": "Exact prior generation prompts, asset hashes and validation claims are historical evidence."
+    },
+    {
+      "reference": "docs/IDENTITY_MIGRATION.md",
+      "reason": "Frozen 0.16.0 rename and historical validation/Git state; superseded for current fixes by docs/AUDIT_REMEDIATION.md."
     }
   ]
 }

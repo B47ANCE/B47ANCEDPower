@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.0-dev.1]
+
+- Development audit remediation: charge storage, authority, reservations, replication,
+  watch scheduling, bounded event retention, status recovery and validation tooling.
+- Add server sandbox loot controls while preserving existing defaults.
+- Dedicated multiplayer NOT TESTED; stable-release G8 BLOCKED.
+
 ## [0.16.0]
 
 - Use the user-supplied B47ANCE'd Power thumbnail for the project preview and mod

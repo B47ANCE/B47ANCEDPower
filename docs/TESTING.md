@@ -1,6 +1,18 @@
 # B47ANCE'd Power Testing
 
-Project Version: 0.16.0
+Project Version: 0.17.0-dev.1
+
+## Current audit remediation
+
+Run `python scripts/run_lua_tests.py` (25 files),
+`python tests/test_audit_regressions.py` (12 targeted scenarios), identity/version
+checks and the existing 11 source-art unit tests. The new targeted tests failed
+against the audited baseline before fixes. Watch server tests use the real API
+and nested inventory traversal. See [AUDIT_REMEDIATION.md](AUDIT_REMEDIATION.md)
+for contracts and [RUNTIME_VALIDATION.md](RUNTIME_VALIDATION.md) for untested
+native cases. G7 NOT TESTED / BLOCKED; stable-release G8 BLOCKED.
+
+The following versioned sections retain historical scope and evidence.
 
 ## 0.16.0 identity rename
 

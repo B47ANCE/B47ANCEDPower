@@ -42,7 +42,7 @@ local watch={
     stopRinging=function() stopped=true end,
     syncAlarmClock=function() synced=true end,
 }
-B47ANCEDPower.maintainPoweredWatch(watch)
+B47ANCEDPower.ensurePoweredWatch(watch)
 assert(B47ANCEDPower.getInstalledBatteryType(watch)=="B47ANCEDPower.BatteryCoin",
     "new digital watches must initialize with an embedded coin cell")
 assert(data.B47ANCEDPower.chargeFraction>0 and data.B47ANCEDPower.chargeFraction<1,
@@ -51,25 +51,22 @@ local initializedCharge=data.B47ANCEDPower.chargeFraction
 B47ANCEDPower.ensurePoweredWatch(watch)
 assert(data.B47ANCEDPower.chargeFraction==initializedCharge,
     "display refresh must not consume watch energy")
-data.B47ANCEDPower.chargeFraction=0
-B47ANCEDPower.maintainPoweredWatch(watch)
-assert(alarm==false and stopped and synced,"a depleted digital watch must disable and synchronize its alarm")
-
+-- Alarm draining and minute scheduling are tested against the real server module.
 local classic={getFullType=function() return "Base.WristWatch_Left_ClassicBlack" end,getModData=function() return {} end}
 B47ANCEDPower.maintainPoweredWatch(classic)
 assert(B47ANCEDPower.getInstalledBatteryType(classic)==nil,"classic watches must remain mechanical")
 data={B47ANCEDPower="invalid saved state"}
-B47ANCEDPower.maintainPoweredWatch(watch)
+B47ANCEDPower.ensurePoweredWatch(watch)
 assert(data.B47ANCEDPower=="invalid saved state" and not data.B47ANCEDPowerWatchInitialized)
 data={}
 local refresh=B47ANCEDPower.refreshConsumer
 B47ANCEDPower.refreshConsumer=function() error("simulated initialization failure") end
-B47ANCEDPower.maintainPoweredWatch(watch)
+B47ANCEDPower.ensurePoweredWatch(watch)
 assert(not data.B47ANCEDPowerWatchInitialized and data.B47ANCEDPower.batteryType==nil)
 assert(data.B47ANCEDPowerServiceRecovery.status=="inspection_required")
 assert(not B47ANCEDPower.consumeEnergy(watch,0.1))
 B47ANCEDPower.refreshConsumer=refresh
-B47ANCEDPower.maintainPoweredWatch(watch)
+B47ANCEDPower.ensurePoweredWatch(watch)
 assert(not data.B47ANCEDPowerWatchInitialized,"quarantine must not be bypassed by watch maintenance")
 data={}
 local bad={getFullType=watch.getFullType,getModData=function() error("broken mod item") end}
@@ -78,8 +75,7 @@ local list={size=function() return #contents end,get=function(_,index) return co
 getSpecificPlayer=function(index)
     if index==0 then return {getInventory=function() return {getItems=function() return list end} end} end
 end
-assert(pcall(minuteTick),"one broken watch must not abort the minute event")
-assert(data.B47ANCEDPowerWatchInitialized and B47ANCEDPower.getInstalledBatteryType(watch),"later watches must still be processed")
+assert(minuteTick==nil,"client module must not own periodic watch drain")
 
 -- Remote clients request canonical maintenance and do not initialize or drain
 -- the item locally.
@@ -100,6 +96,7 @@ assert(not B47ANCEDPower.consumeEnergy(watch,0.1),"remote clients cannot mutate 
 isClient=function() return false end
 isServer=function() return false end
 data={}
+B47ANCEDPower.ensurePoweredWatch(watch) -- explicit authority fixture setup, never menu-owned initialization
 local cell={getFullType=function()return"B47ANCEDPower.BatteryCoin"end,getUsedDelta=function()return.5 end}
 contents={watch,cell}
 local menuPlayer={getInventory=function()return{getItems=function()return list end}end}

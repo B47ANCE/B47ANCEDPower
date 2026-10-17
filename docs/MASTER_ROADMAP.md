@@ -1,8 +1,9 @@
 # B47ANCE'd Power Master Roadmap
 
-Canonical version: 0.16.0.
+Canonical version: 0.17.0-dev.1.
 
-This development version implements the full B47ANCE'd Power identity rename.
+This development version repairs the audit findings; see [AUDIT_REMEDIATION.md](AUDIT_REMEDIATION.md).
+The earlier 0.16.0 iteration implemented the identity rename.
 See [IDENTITY_MIGRATION.md](IDENTITY_MIGRATION.md) for breaking namespace changes,
 dependent-mod work, offline validation and runtime gates. Earlier feature and
 validation entries below retain their original scope.

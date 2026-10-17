@@ -21,3 +21,6 @@ option B47ANCEDPower.BatteryPackAssemblyEfficiency { type = double, min = 0.1, m
 option B47ANCEDPower.DigitalWatchDrainPerMinute { type = double, min = 0.0, max = 0.001, default = 0.0000002, page = B47ANCEDPower, translation = B47ANCEDPower_DigitalWatchDrainPerMinute, }
 option B47ANCEDPower.CoinCellLootChance { type = double, min = 0.0, max = 1.0, default = 0.1, page = B47ANCEDPower, translation = B47ANCEDPower_CoinCellLootChance, }
 option B47ANCEDPower.SolarMilitaryWatchLootChance { type = double, min = 0.0, max = 0.1, default = 0.003, page = B47ANCEDPower, translation = B47ANCEDPower_SolarMilitaryWatchLootChance, }
+
+option B47ANCEDPower.ExtraBatteryLootMultiplier { type = double, min = 0.0, max = 10.0, default = 1.0, page = B47ANCEDPower, translation = B47ANCEDPower_ExtraBatteryLootMultiplier, }
+option B47ANCEDPower.AdapterMagazineLootChance { type = double, min = 0.0, max = 1.0, default = 0.012, page = B47ANCEDPower, translation = B47ANCEDPower_AdapterMagazineLootChance, }

@@ -21,3 +21,9 @@ authorized current artifacts in `dist/current/`. No current archive was built
 for this rename, so the development check defers packaging and the release
 check must fail until a current package exists. Version PASS alone cannot pass
 G7 or stable-release G8.
+
+Current development version: 0.17.0-dev.1.
+
+This compatible MINOR development iteration adds grouped sandbox controls and
+repairs audited contracts. The old identity-migration record is historical;
+`docs/AUDIT_REMEDIATION.md` is the current implementation/validation record.

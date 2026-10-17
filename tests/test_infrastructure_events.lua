@@ -58,7 +58,7 @@ local beforeApplied=#applied
 local partialOk,partial=events.ingest(event("weatherWorks:partial","severe_storm","started",14,"cell:partial"))
 assert(partialOk and partial.status=="inspection_required"and#applied==beforeApplied,
     "incomplete provider discovery must not dispatch mutation handlers")
-local interrupted={schemaVersion=1,revision=1,history={{eventId="interrupted",status="dispatching"}},processed={},latestByStream={}}
+local interrupted={schemaVersion=1,revision=1,history={{eventId="interrupted",status="dispatching",stream="weather:high_wind:cell:1",worldAgeHours=1,event={phase="started"}}},processed={},latestByStream={}}
 assert(events.attachStore(interrupted)and interrupted.history[1].status=="inspection_required")
 assert(events.getDiagnostics().recoveredDispatches==1)
 isClient=function()return true end;isServer=function()return false end

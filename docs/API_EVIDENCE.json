@@ -1,0 +1,117 @@
+{
+  "schema": 1,
+  "records": [
+    {
+      "api_library": "Project Zomboid vanilla Lua/exposed engine APIs",
+      "receiver_type": "global function",
+      "symbol": "getOnlinePlayers",
+      "signature": "getOnlinePlayers()",
+      "signature_scope": "observed_vanilla_call",
+      "game_version": "UNKNOWN",
+      "steam_build": "25485521",
+      "side": "server",
+      "returns": "Observed vanilla value used as described in evidence; full return/overload contract UNKNOWN.",
+      "mutation": "Observed read only.",
+      "status": "VERIFIED",
+      "runtime_status": "NOT_TESTED",
+      "verified_on": "2026-10-16",
+      "evidence": [
+        {
+          "kind": "vanilla_lua",
+          "path": "media/lua/server/XpSystem/XpUpdate.lua",
+          "sha256": "8ad8b9eb27e054a8d1051815c7796daa67e87416ac319288c79805e370d87b71",
+          "lines": [
+            293,
+            299
+          ],
+          "statement": "Vanilla server XP updates enumerate online players using size/get; SP selects local active players."
+        }
+      ],
+      "notes": "Source-verified call form for B47ANCEDPower audit remediation. No game or server invocation; exact engine patch version UNKNOWN."
+    },
+    {
+      "api_library": "Project Zomboid vanilla Lua/exposed engine APIs",
+      "receiver_type": "GameTime",
+      "symbol": "getWorldAgeHours",
+      "signature": "getGameTime():getWorldAgeHours()",
+      "signature_scope": "observed_vanilla_call",
+      "game_version": "UNKNOWN",
+      "steam_build": "25485521",
+      "side": "server",
+      "returns": "Observed vanilla value used as described in evidence; full return/overload contract UNKNOWN.",
+      "mutation": "Observed read only.",
+      "status": "VERIFIED",
+      "runtime_status": "NOT_TESTED",
+      "verified_on": "2026-10-16",
+      "evidence": [
+        {
+          "kind": "vanilla_lua",
+          "path": "media/lua/server/Farming/SFarmingSystem.lua",
+          "sha256": "28576002bbab0e0561c713bc6b8e2d829d6cd7b917f5b8a702cbfcef46b39914",
+          "lines": [
+            258,
+            258
+          ],
+          "statement": "Vanilla farming reads world age hours from the game-time object."
+        }
+      ],
+      "notes": "Source-verified call form for B47ANCEDPower audit remediation. No game or server invocation; exact engine patch version UNKNOWN."
+    },
+    {
+      "api_library": "Project Zomboid vanilla Lua/exposed engine APIs",
+      "receiver_type": "global function",
+      "symbol": "getTimestampMs",
+      "signature": "getTimestampMs()",
+      "signature_scope": "observed_vanilla_call",
+      "game_version": "UNKNOWN",
+      "steam_build": "25485521",
+      "side": "client",
+      "returns": "Observed vanilla value used as described in evidence; full return/overload contract UNKNOWN.",
+      "mutation": "Observed read only.",
+      "status": "VERIFIED",
+      "runtime_status": "NOT_TESTED",
+      "verified_on": "2026-10-16",
+      "evidence": [
+        {
+          "kind": "vanilla_lua",
+          "path": "media/lua/client/Chat/ISChat.lua",
+          "sha256": "0386ca1cd4bb936ea6a3591dc13f77f1ef830764c6b8a8ee2ded92559b16b483",
+          "lines": [
+            469,
+            469
+          ],
+          "statement": "Vanilla client chat compares wall-clock milliseconds for message throttling."
+        }
+      ],
+      "notes": "Source-verified call form for B47ANCEDPower audit remediation. No game or server invocation; exact engine patch version UNKNOWN."
+    },
+    {
+      "symbol": "getCurrentUsesFloat",
+      "signature": "self.fuel:getCurrentUsesFloat()",
+      "signature_scope": "observed_vanilla_call",
+      "game_version": "UNKNOWN",
+      "steam_build": "25485521",
+      "side": "shared",
+      "returns": "Numeric value compared with zero and passed into setUsedDelta by vanilla Lua; complete native units and return contract UNKNOWN.",
+      "mutation": "Observed read of the fuel item. No mutation or synchronization performed by this call.",
+      "status": "VERIFIED",
+      "runtime_status": "NOT_TESTED",
+      "verified_on": "2026-10-16",
+      "evidence": [
+        {
+          "kind": "vanilla_lua",
+          "path": "media/lua/shared/BuildingObjects/TimedActions/ISInsertLightSourceFuelAction.lua",
+          "sha256": "677c12999c30b5068f9f9dedb2fce25f1ce862fcb89500cfde5a5eaaf539f949",
+          "lines": [
+            5,
+            6
+          ],
+          "statement": "Vanilla light-source insertion checks its fuel item charge through getCurrentUsesFloat; complete action also copies the value into a replacement fuel item."
+        }
+      ],
+      "notes": "Audited during B47ANCEDPower 0.16.0 review. Exact full game version UNKNOWN; Steam build checked from local app manifest. Native InventoryItem/DrainableComboItem metadata corroborates the method name and contains no getUsedDelta name; this does not independently establish Lua exposure. No game/server execution or MP proof.",
+      "api_library": "Project Zomboid vanilla Lua/exposed engine APIs",
+      "receiver_type": "InventoryItem fuel used by ISInsertLightSourceFuelAction (observed receiver)"
+    }
+  ]
+}

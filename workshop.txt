@@ -4,7 +4,10 @@ tags=Build 42;Framework;Items
 visibility=public
 description=[h1]⚠ DEVELOPMENT BUILD — NOT YET PLAYABLE ⚠[/h1]
 description=
-description=[b]Mod Version: 0.16.0[/b]
+description=[b]Mod Version: 0.17.0-dev.1[/b]
+description=
+description=[b]Dedicated multiplayer NOT TESTED — stable-release G8 BLOCKED.[/b]
+description=[url=https://github.com/B47ANCE/B47ANCEDPower]Public GitHub source and development history[/url]
 description=
 description=[b]This mod is under active development and is not yet considered playable or release-ready.[/b]
 description=
