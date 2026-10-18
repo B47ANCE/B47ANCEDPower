@@ -37,5 +37,10 @@
     "Offline fixtures do not prove native synchronization, serialization, alarm behavior or dedicated multiplayer correctness.",
     "0.17.0-dev.2 is artwork/packaging only. The 2026-10-16 0.17.0-dev.1 report is retained separately; native gameplay remains NOT TESTED.",
     "Package and distribution provenance are recorded separately after exact-commit staging and actual SteamCMD success; no SP deployment/game/server launch."
-  ]
+  ],
+  "distribution": {
+    "status": "SteamCMD existing-item upload VERIFIED; public page/subscription download unverified",
+    "evidence": "WORKSHOP_UPLOAD_0_17_0_dev_2.json",
+    "runtime_implication": "None; SP/G7 remain NOT TESTED, stable G8 BLOCKED"
+  }
 }
