@@ -97,6 +97,11 @@ and `dist/workshop-<version>/` by `python scripts/prepare_workshop.py`;
 the staged `Contents/` directory and preserves the existing Workshop preview.
 See [the icon and distribution record](docs/ICON_RELEASE.md).
 
+SteamCMD confirmed the existing-item 0.17.0-dev.2 MP testing upload on 2026-10-18.
+The [upload record](docs/WORKSHOP_UPLOAD_0_17_0_dev_2.json) binds the package and
+merged source commits. Public-page/subscription delivery remains unverified;
+SP and dedicated validation are still outstanding.
+
 Run `python tests/test_audit_regressions.py`,
 `python scripts/check_versions.py --root .`,
 `python scripts/check_identity.py`, and `python scripts/run_lua_tests.py`

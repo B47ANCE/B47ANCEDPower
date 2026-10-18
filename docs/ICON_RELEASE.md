@@ -57,3 +57,11 @@ retain their contracts in `AUDIT_REMEDIATION.md`; this artwork change does not
 constitute renewed native gameplay evidence. SP NOT TESTED, dedicated G7
 NOT TESTED / BLOCKED, stable-release G8 BLOCKED. Follow `RUNTIME_VALIDATION.md`
 on fresh disposable saves with two clients, reconnects and server restarts.
+
+## Actual upload result
+
+SteamCMD exited 0 with cached login and the successful existing-item commit
+marker on 2026-10-18. `WORKSHOP_UPLOAD_0_17_0_dev_2.json` records the exact
+package/VDF hashes, payload commit and merged main commit. Public-page access
+remains unavailable (HTTP 429; public API result 9 without details). Subscription
+download and native runtime remain NOT TESTED. Steam was not restarted.
