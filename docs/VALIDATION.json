@@ -3,7 +3,7 @@
   "date": "2026-10-18",
   "environment": "Host Lua 5.1 via Lupa; Windows; no Project Zomboid execution",
   "checks": {
-    "version_inventory": "PASS (development only; current ZIP absent)",
+    "version_inventory": "PASS: current artifact and --release version checks; stable G8 remains BLOCKED",
     "identity_and_mirror": "PASS: 115 source files and 115 identical mirror files, 33 local require references, 29 language folders",
     "lua_regression_files": "PASS: 25",
     "lua_syntax_files": "PASS: 44",
@@ -12,7 +12,8 @@
     "art_coverage": "PASS: 10 source exports and 10 selected RGBA icon masters",
     "protected_files": "Original thumbnail/preview hashes unchanged; historical outputs and other artwork untouched by this checkpoint",
     "diff_whitespace": "PASS",
-    "icon": "PASS: approved 1254x1254 RGBA, alpha 0..255, transparent corners, master/source/mirror identical"
+    "icon": "PASS: approved 1254x1254 RGBA, alpha 0..255, transparent corners, master/source/mirror identical",
+    "package_integrity": "PASS: 117 exact files, CRC/data, source/stage/ZIP and commit hashes; traversal, case collision, changed bytes and corrupted CRC fixtures rejected"
   },
   "runtime": {
     "SP": "NOT TESTED",
