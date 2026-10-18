@@ -1,0 +1,36 @@
+{
+  "project_version": "0.17.0-dev.1",
+  "date": "2026-10-16",
+  "environment": "Host Lua 5.1 via Lupa; Windows; no Project Zomboid execution",
+  "checks": {
+    "version_inventory": "PASS (development only; current ZIP absent)",
+    "identity_and_mirror": "PASS: 115 source files and 115 identical mirror files, 33 local require references, 29 language folders",
+    "lua_regression_files": "PASS: 25",
+    "lua_syntax_files": "PASS: 44",
+    "targeted_audit_cases": "PASS: 12; all 12 failed before production changes",
+    "art_unit_tests": "PASS: 11",
+    "art_coverage": "PASS: 10 source exports and 10 selected RGBA icon masters",
+    "protected_files": "PASS: 1295 original asset/historical files unchanged",
+    "diff_whitespace": "PASS"
+  },
+  "runtime": {
+    "SP": "NOT TESTED",
+    "hosted_MP": "NOT TESTED",
+    "dedicated_G7": "NOT TESTED / BLOCKED",
+    "stable_G8": "BLOCKED"
+  },
+  "commands": [
+    "python scripts/check_versions.py --root . --json",
+    "python scripts/check_identity.py",
+    "python scripts/run_lua_tests.py",
+    "python tests/test_audit_regressions.py",
+    "python art/test_asset_coverage.py",
+    "python art/check_asset_coverage.py",
+    "git diff --check"
+  ],
+  "notes": [
+    "Offline fixtures do not prove native synchronization, serialization, alarm behavior or dedicated multiplayer correctness.",
+    "No current package created and no --release check claimed.",
+    "No game/server launch, deployment, Workshop upload or historical archive rewrite."
+  ]
+}

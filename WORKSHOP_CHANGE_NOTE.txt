@@ -1,3 +1,19 @@
+[b]Version 0.17.0-dev.2[/b]
+
+MP testing build - dedicated multiplayer NOT TESTED
+
+Uses the approved transparent battery artwork as the mod-list icon. The project
+thumbnail is unchanged. Includes the previously merged charge, reservation,
+server-authority, watch scheduling, replication and recovery audit repairs.
+
+Mod ID: B47ANCEDPower. Use a fresh disposable save. Dependent mods still need
+their own namespace/dependency updates. Native SP and dedicated multiplayer
+remain NOT TESTED; G7 and stable-release G8 remain BLOCKED.
+
+Source: https://github.com/B47ANCE/B47ANCEDPower
+
+[h2]Historical change notes[/h2]
+
 [b]Version 0.17.0-dev.1[/b]
 
 [h2]Audit repairs — development build[/h2]

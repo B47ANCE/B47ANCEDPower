@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.0-dev.2]
+
+- Replace the mod-list icon with the approved transparent battery artwork; preserve thumbnail bytes.
+- Add reproducible existing-item Workshop staging, integrity and provenance checks.
+- Prepare an explicitly authorized MP testing upload; native SP/dedicated remain NOT TESTED.
+- Compatible artwork/packaging checkpoint; no gameplay, API, sandbox or save-schema changes.
+
 ## [0.17.0-dev.1]
 
 - Development audit remediation: charge storage, authority, reservations, replication,

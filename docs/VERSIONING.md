@@ -22,8 +22,13 @@ for this rename, so the development check defers packaging and the release
 check must fail until a current package exists. Version PASS alone cannot pass
 G7 or stable-release G8.
 
-Current development version: 0.17.0-dev.1.
+Current development version: 0.17.0-dev.2.
 
 This compatible MINOR development iteration adds grouped sandbox controls and
 repairs audited contracts. The old identity-migration record is historical;
 `docs/AUDIT_REMEDIATION.md` is the current implementation/validation record.
+
+The 0.17.0-dev.2 checkpoint is a PATCH-compatible artwork/packaging update within
+the unreleased 0.17.0 line. Gameplay/API/configuration/save contracts are unchanged.
+Historical 0.17.0-dev.1 offline evidence is retained separately; current checks
+are rerun for the new checkpoint. Workshop test distribution is not stable G8.

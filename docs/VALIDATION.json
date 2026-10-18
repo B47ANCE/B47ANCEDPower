@@ -1,6 +1,6 @@
 {
-  "project_version": "0.17.0-dev.1",
-  "date": "2026-10-16",
+  "project_version": "0.17.0-dev.2",
+  "date": "2026-10-18",
   "environment": "Host Lua 5.1 via Lupa; Windows; no Project Zomboid execution",
   "checks": {
     "version_inventory": "PASS (development only; current ZIP absent)",
@@ -10,8 +10,9 @@
     "targeted_audit_cases": "PASS: 12; all 12 failed before production changes",
     "art_unit_tests": "PASS: 11",
     "art_coverage": "PASS: 10 source exports and 10 selected RGBA icon masters",
-    "protected_files": "PASS: 1295 original asset/historical files unchanged",
-    "diff_whitespace": "PASS"
+    "protected_files": "Original thumbnail/preview hashes unchanged; historical outputs and other artwork untouched by this checkpoint",
+    "diff_whitespace": "PASS",
+    "icon": "PASS: approved 1254x1254 RGBA, alpha 0..255, transparent corners, master/source/mirror identical"
   },
   "runtime": {
     "SP": "NOT TESTED",
@@ -26,11 +27,14 @@
     "python tests/test_audit_regressions.py",
     "python art/test_asset_coverage.py",
     "python art/check_asset_coverage.py",
-    "git diff --check"
+    "git diff --check",
+    "python scripts/prepare_workshop.py",
+    "python scripts/prepare_workshop.py --verify",
+    "python scripts/check_versions.py --root . --release --json"
   ],
   "notes": [
     "Offline fixtures do not prove native synchronization, serialization, alarm behavior or dedicated multiplayer correctness.",
-    "No current package created and no --release check claimed.",
-    "No game/server launch, deployment, Workshop upload or historical archive rewrite."
+    "0.17.0-dev.2 is artwork/packaging only. The 2026-10-16 0.17.0-dev.1 report is retained separately; native gameplay remains NOT TESTED.",
+    "Package and distribution provenance are recorded separately after exact-commit staging and actual SteamCMD success; no SP deployment/game/server launch."
   ]
 }

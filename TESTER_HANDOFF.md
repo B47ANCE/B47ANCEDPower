@@ -1,4 +1,4 @@
-# B47ANCE'd Power 0.17.0-dev.1 playtester handoff
+# B47ANCE'd Power 0.17.0-dev.2 playtester handoff
 
 This is an updated test procedure, not a runtime result. Use a fresh disposable
 save with Mod ID `B47ANCEDPower` and reconfigure sandbox settings. No legacy-save

@@ -1,6 +1,6 @@
 # B47ANCE'd Power in-game validation
 
-Current development version: `0.17.0-dev.1`. Enable Mod ID `B47ANCEDPower` on a fresh
+Current development version: `0.17.0-dev.2`. Enable Mod ID `B47ANCEDPower` on a fresh
 disposable save. Reconfigure sandbox settings; do not load a prior-identity save
 to test this breaking rename. This document is a procedure, not runtime evidence.
 
