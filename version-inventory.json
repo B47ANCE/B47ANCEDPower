@@ -77,6 +77,18 @@
     {
       "path": "docs/VALIDATION.json",
       "pattern": "\"project_version\": \"(?P<version>[^\"]+)\""
+    },
+    {
+      "path": "docs/ICON_RELEASE.md",
+      "pattern": "^Project Version: (?P<version>\\S+)$"
+    },
+    {
+      "path": "docs/MOD_OVERVIEW.json",
+      "pattern": "\"version\": \"(?P<version>[^\"]+)\""
+    },
+    {
+      "path": "SOURCE_INVENTORY.json",
+      "pattern": "\"project_version\": \"(?P<version>[^\"]+)\""
     }
   ],
   "changelog": {
@@ -111,8 +123,8 @@
   ],
   "historical": [
     {
-      "reference": "dist/",
-      "reason": "All pre-rename ZIPs and staging backups are immutable historical artifacts; no current 0.16.0 package is claimed."
+      "reference": "dist/powerWorks-*.zip and dist/staging-backups/",
+      "reason": "Immutable historical pre-rename packages/backups. Current artifacts use dist/current and versioned workshop staging."
     },
     {
       "reference": "SHA256SUMS.txt and .steamcmd-last-upload.sha256",
@@ -129,6 +141,10 @@
     {
       "reference": "docs/IDENTITY_MIGRATION.md",
       "reason": "Frozen 0.16.0 rename and historical validation/Git state; superseded for current fixes by docs/AUDIT_REMEDIATION.md."
+    },
+    {
+      "reference": "docs/VALIDATION_0_17_0_dev_1.json",
+      "reason": "Frozen 2026-10-16 host/offline evidence for 0.17.0-dev.1; no native runtime proof."
     }
   ]
 }

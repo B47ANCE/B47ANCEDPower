@@ -3,7 +3,7 @@ local B47ANCEDPower=B47ANCEDPower
 local ItemAccess=require "B47ANCEDPower/ItemAccess"
 local Sandbox=require "B47ANCEDPower/Sandbox"
 
-B47ANCEDPower.VERSION="0.17.0-dev.1"
+B47ANCEDPower.VERSION="0.17.0-dev.2"
 B47ANCEDPower.Batteries=B47ANCEDPower.Batteries or {}
 B47ANCEDPower.Consumers=B47ANCEDPower.Consumers or {}
 B47ANCEDPower.Loads=B47ANCEDPower.Loads or {}

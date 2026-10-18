@@ -1,0 +1,39 @@
+{
+  "id": "power",
+  "features": [
+    {
+      "status": "Source",
+      "text": "Battery/device profiles, charge accounting, battery replacement, coin-cell watches and improvised adapters."
+    },
+    {
+      "status": "Source",
+      "text": "Reserved energy transactions, rollback and uncertain-operation recovery."
+    },
+    {
+      "status": "Foundation",
+      "text": "Source/storage/load/network registries, appliance watt profiles and bounded infrastructure discovery."
+    },
+    {
+      "status": "Foundation",
+      "text": "Read-only generator observations and Weather event ingestion/consequence proposals."
+    },
+    {
+      "status": "Source",
+      "text": "Approved transparent battery mod icon; original thumbnail retained byte-for-byte."
+    }
+  ],
+  "limits": "Generator electrical capacity and automatic external-storage charging remain unresolved. Event ingestion does not automatically damage equipment. Native SP/dedicated acceptance pending. G7 and stable G8 BLOCKED; optional integrations still need their own namespace updates.",
+  "evidence": [
+    "README.md",
+    "VERSION",
+    "src/B47ANCEDPower/42/mod.info",
+    "docs/AUDIT_REMEDIATION.md",
+    "docs/ICON_RELEASE.md"
+  ],
+  "schema": 1,
+  "name": "B47ANCE'd Power",
+  "version": "0.17.0-dev.2",
+  "reviewed": true,
+  "source_digest": "d98df47d294e46e9b8b503a22ab7b93fdfa0e2a32aac7727a4c7d1f1bb8476b6",
+  "relations": []
+}

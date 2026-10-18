@@ -1,0 +1,26 @@
+{
+  "project_version": "0.17.0-dev.2",
+  "source_root": "src/B47ANCEDPower",
+  "mirror": "Contents/mods/B47ANCEDPower",
+  "mod_ids": [
+    "B47ANCEDPower"
+  ],
+  "workshop_ids": [
+    "3788592598"
+  ],
+  "generated_outputs": [
+    "dist/current/",
+    "dist/workshop-<version>/",
+    "dist/RELEASE-<version>.json",
+    "dist/B47ANCEDPower-<version>.vdf"
+  ],
+  "historical": [
+    "dist/powerWorks-*.zip",
+    "dist/staging-backups/",
+    "SHA256SUMS.txt",
+    ".steamcmd-last-upload.sha256"
+  ],
+  "package_command": "python scripts/prepare_workshop.py",
+  "verification_command": "python scripts/prepare_workshop.py --verify",
+  "runtime": "Lua-only; vanilla FBX/PNG/script assets; no custom Java/JAR/native dependency"
+}

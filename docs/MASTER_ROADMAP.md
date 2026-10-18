@@ -1,6 +1,6 @@
 # B47ANCE'd Power Master Roadmap
 
-Canonical version: 0.17.0-dev.1.
+Canonical version: 0.17.0-dev.2.
 
 This development version repairs the audit findings; see [AUDIT_REMEDIATION.md](AUDIT_REMEDIATION.md).
 The earlier 0.16.0 iteration implemented the identity rename.

@@ -2,12 +2,15 @@ version=1
 title=B47ANCE'd Power
 tags=Build 42;Framework;Items
 visibility=public
+
 description=[h1]⚠ DEVELOPMENT BUILD — NOT YET PLAYABLE ⚠[/h1]
 description=
-description=[b]Mod Version: 0.17.0-dev.1[/b]
+description=[b]Mod Version: 0.17.0-dev.2[/b]
 description=
-description=[b]Dedicated multiplayer NOT TESTED — stable-release G8 BLOCKED.[/b]
+description=[b]MP testing build - dedicated multiplayer NOT TESTED[/b]
+description=[b]Native SP NOT TESTED; G7 and stable-release G8 BLOCKED.[/b]
 description=[url=https://github.com/B47ANCE/B47ANCEDPower]Public GitHub source and development history[/url]
+description=
 description=
 description=[b]This mod is under active development and is not yet considered playable or release-ready.[/b]
 description=
@@ -131,4 +134,4 @@ description=
 description=[h2]Workshop Information[/h2]
 description=
 description=[b]Workshop ID:[/b] 3788592598
-description=[b]Mod ID:[/b] B47ANCE'd Power
+description=[b]Mod ID:[/b] B47ANCEDPower

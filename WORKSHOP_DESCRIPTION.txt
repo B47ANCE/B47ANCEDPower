@@ -1,8 +1,9 @@
 [h1]⚠ DEVELOPMENT BUILD — NOT YET PLAYABLE ⚠[/h1]
 
-[b]Mod Version: 0.17.0-dev.1[/b]
+[b]Mod Version: 0.17.0-dev.2[/b]
 
-[b]Dedicated multiplayer NOT TESTED — stable-release G8 BLOCKED.[/b]
+[b]MP testing build - dedicated multiplayer NOT TESTED[/b]
+[b]Native SP NOT TESTED; G7 and stable-release G8 BLOCKED.[/b]
 [url=https://github.com/B47ANCE/B47ANCEDPower]Public GitHub source and development history[/url]
 
 
@@ -128,4 +129,4 @@ Technical Writer and Documentation Maintainer
 [h2]Workshop Information[/h2]
 
 [b]Workshop ID:[/b] 3788592598
-[b]Mod ID:[/b] B47ANCE'd Power
+[b]Mod ID:[/b] B47ANCEDPower

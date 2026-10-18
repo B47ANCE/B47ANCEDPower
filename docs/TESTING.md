@@ -1,6 +1,6 @@
 # B47ANCE'd Power Testing
 
-Project Version: 0.17.0-dev.1
+Project Version: 0.17.0-dev.2
 
 ## Current audit remediation
 

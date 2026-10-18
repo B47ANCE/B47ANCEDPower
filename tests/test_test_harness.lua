@@ -5,7 +5,7 @@ local function newItem(kind)local item={kind=kind};function item:getFullType()re
 local inventory={items={}};function inventory:getItems()return self.items end;function inventory:AddItem(value)local item=type(value)=="string"and newItem(value)or value;self.items[#self.items+1]=item;return item end
 local player={modData={}};function player:getModData()return self.modData end;function player:getInventory()return inventory end;getSpecificPlayer=function()return player end
 SandboxVars={B47ANCEDPower={EnableImprovisedAdapters=true}}
-local API={VERSION="0.17.0-dev.1",installBattery=function()end,getConsumerPowerState=function()end,beginEnergyTransaction=function()end,isAuthority=function()return true end}
+local API={VERSION="0.17.0-dev.2",installBattery=function()end,getConsumerPowerState=function()end,beginEnergyTransaction=function()end,isAuthority=function()return true end}
 function API.getBatteryProfile(value)return value=="B47ANCEDPower.BatteryCoin"and{}or nil end
 function API.getConsumerProfile(value)return value=="Base.WristWatch_Right_DigitalBlack"and{}or nil end
 package.loaded["B47ANCEDPower/Definitions"]=API;_G.B47ANCEDPower=API
